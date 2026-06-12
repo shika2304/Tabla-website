@@ -230,6 +230,18 @@ header{
   margin-top:1.6rem;padding:1rem 1.4rem;border-left:2px solid var(--gold);
   background:rgba(110,31,51,.18);font-style:italic;color:var(--cream);
 }
+.about-creds{
+  list-style:none;margin:1.2rem 0 .4rem;
+  display:flex;flex-direction:column;gap:.45rem;
+}
+.about-creds li{
+  font-size:1rem;color:rgba(245,233,211,.72);
+  padding-left:1.3em;position:relative;line-height:1.5;
+}
+.about-creds li::before{
+  content:'\25C6';position:absolute;left:0;
+  color:var(--gold);font-size:.55em;top:.42em;
+}
 
 /* ============ CLASSES ============ */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:1.6rem}
@@ -731,8 +743,17 @@ body.cur-grow #cur-ring{width:42px;height:42px;border-color:var(--gold)}
       <div class="about-text reveal">
         <p class="eyebrow">The Guru</p>
         <h2 class="gold-grad">Training by Pamela Banerjee</h2>
-        <p>Pamela Banerjee is a tabla artist and teacher, and the guiding hand behind Ragranjani Music Academy in Belgharia, Nimta, Kolkata. Her classes carry forward the guru&ndash;shishya tradition &mdash; patient, personal, and rooted in the discipline of taal.</p>
-        <p>Students are trained in both basic and advanced methods of tabla, with a strong foundation in the knowledge of taal and proper guidance in accompaniment for all types of vocal music and dance. Lessons are offered online and offline, and complete beginners are warmly welcomed.</p>
+        <p>Pamela Banerjee is a gold medallist tabla artist and the guiding hand behind Ragranjani Music Academy in Belgharia, Nimta, Kolkata. She holds an M.A. in Percussion (Tabla) — First Class First — from Rabindra Bharati University, and is a National Scholar awarded by the Ministry of Culture, Government of India.</p>
+        <p>A disciple of <strong>Pt. Aninda Chatterjee</strong>, <strong>Pt. Dilip Mukherjee</strong>, and <strong>Pt. Asish Sengupta</strong>, her teaching carries the full weight of the guru&ndash;shishya tradition — precise, patient, and deeply rooted in taal.</p>
+        <ul class="about-creds">
+          <li>National Scholar &mdash; Ministry of Culture, Govt of India</li>
+          <li>M.A. Percussion (Tabla), 1st Class 1st &amp; Gold Medalist &mdash; Rabindra Bharati University</li>
+          <li>1st position &mdash; Murari Smriti Tabla Solo (3 times)</li>
+          <li>1st position &mdash; All Bengal Tabla Lahara Competition (2 times)</li>
+          <li>1st position &mdash; Sarba Varatiya Sangeet O Sanskriti Parishad</li>
+          <li>2nd position &mdash; Inter Division Railways Cultural Competition</li>
+          <li>3rd position &mdash; Doverlane Music Competition, Tabla Solo</li>
+        </ul>
         <div class="about-aff">Ragranjani Music Academy is affiliated with Sura Bharati Sangeet Kala Kendra.</div>
       </div>
     </div>

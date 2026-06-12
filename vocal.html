@@ -243,6 +243,18 @@ header{
   margin-top:1.6rem;padding:1rem 1.4rem;border-left:2px solid var(--gold);
   background:rgba(31,45,92,.18);font-style:italic;color:var(--cream);
 }
+.about-creds{
+  list-style:none;margin:1.2rem 0 .4rem;
+  display:flex;flex-direction:column;gap:.45rem;
+}
+.about-creds li{
+  font-size:1rem;color:rgba(245,233,211,.72);
+  padding-left:1.3em;position:relative;line-height:1.5;
+}
+.about-creds li::before{
+  content:'\25C6';position:absolute;left:0;
+  color:var(--gold);font-size:.55em;top:.42em;
+}
 
 /* ============ CLASSES ============ */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.6rem}
@@ -696,8 +708,15 @@ body.cur-grow #cur-ring{width:42px;height:42px;border-color:var(--gold)}
       <div class="about-text reveal">
         <p class="eyebrow">The Guru</p>
         <h2 class="gold-grad">Training by Nirmalya Sen</h2>
-        <p>Nirmalya Sen is a vocalist and music teacher at Ragranjani Music Academy in Belgharia, Kolkata. With deep roots in the classical and devotional traditions of Indian music, his teaching nurtures each student&rsquo;s voice with patience, discipline, and genuine warmth.</p>
-        <p>Training spans a wide range of musical forms &mdash; from the rigour of Indian Classical to the lyrical grace of Rabindra Sangeet, the fervour of Nazrul Geeti, the intimacy of Ghazals, the vibrancy of Modern Bengali Songs, and the devotion of Bhajans. Students also receive training in instrumental accompaniment, and annual examinations are arranged for all.</p>
+        <p>Nirmalya Sen is an Indian classical vocalist and the founder of Ragranjani Music Academy. He holds a Bachelor&rsquo;s and Master&rsquo;s degree in Vocal Music along with a B.Ed from Rabindra Bharati University, Kolkata, and serves as an examiner at Sura Bharati Sangeet Kala Kendra, Hooghly.</p>
+        <p>A disciple of <strong>Late Pt. Arun Bhaduri</strong> and <strong>Pt. Gourab Chatterjee</strong> of ITC Sangeet Research Academy, and <strong>Pt. Ashis Sengupta</strong> of Delhi University, his training carries the full depth of the Hindustani classical tradition. He has performed on television and on stage across West Bengal — Kolkata, Durgapur, Asansol — and nationally in Rajasthan, Chhattisgarh, Delhi, and Mumbai, as well as internationally in Mauritius.</p>
+        <ul class="about-creds">
+          <li>M.A. &amp; B.A. in Vocal Music, B.Ed &mdash; Rabindra Bharati University</li>
+          <li>Navodit Festival Award &mdash; Eastern Zonal Cultural Centre (EZCC), Govt of India</li>
+          <li>State-Level Award &mdash; West Bengal State Youth Festival, Govt of West Bengal</li>
+          <li>Examiner &mdash; Sura Bharati Sangeet Kala Kendra, Hooghly</li>
+          <li>TV appearances &amp; live performances across India and Mauritius</li>
+        </ul>
         <div class="about-aff">Ragranjani Music Academy is affiliated with Sura Bharati Sangeet Kala Kendra.</div>
       </div>
     </div>
