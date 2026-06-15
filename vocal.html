@@ -288,16 +288,26 @@ header{
 /* ============ GALLERY ============ */
 .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.5rem}
 .frame{
-  aspect-ratio:4/3;padding:.9rem;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(160deg,#140e24,#0e0a1a);
+  aspect-ratio:4/3;overflow:hidden;
+  background:#0e0a1a;
   cursor:pointer;transition:border-color .3s,box-shadow .3s,transform .2s;
 }
 .frame:hover{border-color:var(--gold);box-shadow:0 0 24px rgba(201,168,76,.28);transform:translateY(-3px)}
-.frame-inner{
-  width:100%;height:100%;display:flex;flex-direction:column;gap:.6rem;align-items:center;justify-content:center;
-  border:1px dashed rgba(201,168,76,.3);color:var(--gold);text-align:center;padding:1rem;
+.frame-inner{width:100%;height:100%;position:relative;overflow:hidden}
+.frame-inner img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .5s var(--ease);
 }
-.frame-inner svg{width:40px;height:40px;opacity:.7}
+.frame:hover .frame-inner img{transform:scale(1.06)}
+.frame:hover .frame-inner figcaption{opacity:1}
+.frame-inner figcaption{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(to top,rgba(5,3,12,.88),transparent);
+  padding:.9rem .8rem .5rem;
+  font-family:var(--font-head);font-size:.58rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold);
+  opacity:0;transition:opacity .3s;
+}
 .frame-inner span{font-family:var(--font-head);font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--cream-dim)}
 
 /* ============ CONTACT ============ */
@@ -509,7 +519,9 @@ body.cur-grow #cur-ring{width:42px;height:42px;border-color:var(--gold)}
   font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;transition:border-color .2s;
 }
 .lb-close:hover{border-color:var(--gold)}
-.lb-body{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
+.lb-body{display:flex;align-items:center;justify-content:center;max-height:78vh;overflow:hidden}
+.lb-body .frame-inner{width:auto;height:auto}
+.lb-body .frame-inner img{width:auto;height:auto;max-width:min(680px,90vw);max-height:72vh;object-fit:contain;display:block}
 .lb-caption{text-align:center;font-family:var(--font-head);font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:var(--cream-dim);margin-top:1rem;padding-top:.8rem;border-top:1px solid var(--gold-dim)}
 
 /* SOUND TOGGLE */
@@ -863,19 +875,31 @@ body.cur-grow #cur-ring{width:42px;height:42px;border-color:var(--gold)}
   <div class="wrap">
     <p class="eyebrow reveal">Gallery</p>
     <h2 class="gold-grad reveal">Moments From the Academy</h2>
-    <p class="section-sub reveal">Photographs from classes and performances will appear here.</p>
+    <p class="section-sub reveal">From performances and classes to milestones — captured moments of music in motion.</p>
     <div class="gallery-grid">
-      <div class="ornate frame reveal" role="button" tabindex="0" aria-label="Open gallery image: Class in Session" data-caption="Class in Session">
-        <div class="frame-inner"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="10" width="36" height="28" rx="2"/><circle cx="17" cy="20" r="4"/><path d="m6 34 10-9 8 7 8-8 10 10"/></svg><span>Photo &mdash; Class in Session</span></div>
+      <div class="ornate frame reveal" role="button" tabindex="0" aria-label="Open gallery image: Indian High Commission, Mauritius" data-caption="Indian High Commission — Mauritius">
+        <div class="frame-inner">
+          <img src="images/gallery-both-1.jpg" alt="Pamela Banerjee and Nirmalya Sen at the Indian High Commission, Mauritius" loading="lazy">
+          <figcaption>Indian High Commission, Mauritius</figcaption>
+        </div>
       </div>
-      <div class="ornate frame reveal" role="button" tabindex="0" aria-label="Open gallery image: Performance" data-caption="Performance">
-        <div class="frame-inner"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="10" width="36" height="28" rx="2"/><circle cx="17" cy="20" r="4"/><path d="m6 34 10-9 8 7 8-8 10 10"/></svg><span>Photo &mdash; Performance</span></div>
+      <div class="ornate frame reveal" role="button" tabindex="0" aria-label="Open gallery image: Performance — Ramkrishna Event" data-caption="Performance — Ramkrishna Event">
+        <div class="frame-inner">
+          <img src="images/gallery-both-2.jpg" alt="Tabla and vocal performance at Ramkrishna event" loading="lazy">
+          <figcaption>Performance — Ramkrishna Event</figcaption>
+        </div>
       </div>
-      <div class="ornate frame reveal" role="button" tabindex="0" aria-label="Open gallery image: Students" data-caption="Students">
-        <div class="frame-inner"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="10" width="36" height="28" rx="2"/><circle cx="17" cy="20" r="4"/><path d="m6 34 10-9 8 7 8-8 10 10"/></svg><span>Photo &mdash; Students</span></div>
+      <div class="ornate frame reveal" role="button" tabindex="0" aria-label="Open gallery image: Performance — Sarthak, Kolkata" data-caption="Performance — Sarthak, Kolkata">
+        <div class="frame-inner">
+          <img src="images/gallery-both-3.jpg" alt="Tabla and vocal performance at Sarthak Sangeet Sanskriti Parisad, Kolkata" loading="lazy">
+          <figcaption>Performance — Sarthak, Kolkata</figcaption>
+        </div>
       </div>
-      <div class="ornate frame reveal" role="button" tabindex="0" aria-label="Open gallery image: Academy" data-caption="Annual Examination">
-        <div class="frame-inner"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="10" width="36" height="28" rx="2"/><circle cx="17" cy="20" r="4"/><path d="m6 34 10-9 8 7 8-8 10 10"/></svg><span>Photo &mdash; Annual Examination</span></div>
+      <div class="ornate frame reveal" role="button" tabindex="0" aria-label="Open gallery image: Nirmalya Sen — Vocal Performance" data-caption="Nirmalya Sen — Vocal Performance">
+        <div class="frame-inner">
+          <img src="images/gallery-vocal-nirmalya.jpg" alt="Nirmalya Sen performing vocal music" loading="lazy">
+          <figcaption>Nirmalya Sen — Vocal Performance</figcaption>
+        </div>
       </div>
     </div>
   </div>
