@@ -252,18 +252,18 @@ header{
 
 .card-art{
   position:relative;
-  height:220px;
+  height:240px;
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;
 }
-.card-art-tabla{background:radial-gradient(ellipse at center,#2a1206 0%,#120a06 70%)}
-.card-art-vocal{background:radial-gradient(ellipse at center,#130c1f 0%,#09070f 70%)}
+.card-art-tabla{background:radial-gradient(ellipse at 50% 60%,#2e1508 0%,#120a06 75%)}
+.card-art-vocal{background:radial-gradient(ellipse at 50% 60%,#160d2a 0%,#09070f 75%)}
 .card-art svg{
-  width:120px;height:120px;
-  opacity:.75;
-  transition:opacity .35s,transform .35s var(--ease);
+  width:100%;height:100%;
+  opacity:.82;
+  transition:opacity .4s,transform .4s var(--ease);
 }
-.course-card:hover .card-art svg{opacity:1;transform:scale(1.06)}
+.course-card:hover .card-art svg{opacity:1;transform:scale(1.04)}
 
 .card-glow{
   position:absolute;
@@ -503,12 +503,122 @@ footer{
   <a href="tabla.html" class="course-card reveal">
     <div class="card-art card-art-tabla">
       <div class="card-glow"></div>
-      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="60" cy="38" rx="30" ry="14" stroke="#d4a843" stroke-width="1.5" fill="none" opacity=".9"/>
-        <ellipse cx="60" cy="38" rx="19" ry="8.5" stroke="#d4a843" stroke-width="1" fill="rgba(212,168,67,.08)"/>
-        <path d="M30 38 C30 38 28 72 32 86 Q40 98 60 98 Q80 98 88 86 C92 72 90 38 90 38" stroke="#d4a843" stroke-width="1.5" fill="rgba(212,168,67,.05)"/>
-        <ellipse cx="60" cy="94" rx="22" ry="7" stroke="#d4a843" stroke-width="1" fill="none" opacity=".6"/>
-        <path d="M46 38 L44 88 M54 37 L53 96 M66 37 L67 96 M74 38 L76 88" stroke="#d4a843" stroke-width=".8" opacity=".35"/>
+      <!-- Tabla pair: Dayan (right, wood) + Bayan (left, copper) -->
+      <svg viewBox="0 0 280 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Bayan body gradient (copper/brass) -->
+          <linearGradient id="bayanBody" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#3d1e00"/>
+            <stop offset="30%" stop-color="#b8712a"/>
+            <stop offset="55%" stop-color="#d4943c"/>
+            <stop offset="75%" stop-color="#a86020"/>
+            <stop offset="100%" stop-color="#3a1a00"/>
+          </linearGradient>
+          <linearGradient id="bayanBottom" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#8c5020"/>
+            <stop offset="100%" stop-color="#2a1000"/>
+          </linearGradient>
+          <!-- Dayan body gradient (light wood) -->
+          <linearGradient id="dayanBody" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#2a1506"/>
+            <stop offset="25%" stop-color="#7a4a18"/>
+            <stop offset="50%" stop-color="#c47c30"/>
+            <stop offset="75%" stop-color="#8a5020"/>
+            <stop offset="100%" stop-color="#281200"/>
+          </linearGradient>
+          <linearGradient id="dayanBottom" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#6a3c14"/>
+            <stop offset="100%" stop-color="#1e0e04"/>
+          </linearGradient>
+          <!-- Head skin gradient -->
+          <radialGradient id="headSkin" cx="50%" cy="45%" r="55%">
+            <stop offset="0%" stop-color="#f0e4c8"/>
+            <stop offset="70%" stop-color="#d4c49c"/>
+            <stop offset="100%" stop-color="#b8a87a"/>
+          </radialGradient>
+          <radialGradient id="headSkinD" cx="50%" cy="45%" r="55%">
+            <stop offset="0%" stop-color="#ede2c5"/>
+            <stop offset="70%" stop-color="#cfc09a"/>
+            <stop offset="100%" stop-color="#b0a072"/>
+          </radialGradient>
+          <!-- Syahi gradient -->
+          <radialGradient id="syahiB" cx="45%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#2a2a2a"/>
+            <stop offset="100%" stop-color="#080808"/>
+          </radialGradient>
+          <radialGradient id="syahiD" cx="45%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#222"/>
+            <stop offset="100%" stop-color="#050505"/>
+          </radialGradient>
+        </defs>
+
+        <!-- ═══ BAYAN (left, larger, copper) ═══ -->
+        <!-- Shadow -->
+        <ellipse cx="96" cy="198" rx="52" ry="10" fill="rgba(0,0,0,.45)"/>
+        <!-- Bottom rim -->
+        <ellipse cx="96" cy="176" rx="48" ry="14" fill="url(#bayanBottom)" opacity=".8"/>
+        <!-- Cylinder body -->
+        <path d="M48 80 L48 176 Q48 190 96 190 Q144 190 144 176 L144 80" fill="url(#bayanBody)"/>
+        <!-- Rope lacing on body -->
+        <path d="M52 90 L52 172 M60 86 L60 178 M70 84 L70 181 M82 83 L82 182 M96 83 L96 182 M110 83 L110 182 M122 84 L122 181 M132 86 L132 178 M140 90 L140 172" stroke="rgba(212,168,67,.3)" stroke-width=".9"/>
+        <!-- Horizontal rope rings -->
+        <ellipse cx="96" cy="100" rx="47" ry="10" fill="none" stroke="rgba(212,168,67,.35)" stroke-width="1.2"/>
+        <ellipse cx="96" cy="118" rx="47" ry="10" fill="none" stroke="rgba(212,168,67,.28)" stroke-width="1"/>
+        <ellipse cx="96" cy="136" rx="47" ry="10" fill="none" stroke="rgba(212,168,67,.22)" stroke-width=".9"/>
+        <ellipse cx="96" cy="155" rx="47" ry="10" fill="none" stroke="rgba(212,168,67,.18)" stroke-width=".8"/>
+        <!-- Head (pudi) -->
+        <ellipse cx="96" cy="82" rx="48" ry="16" fill="url(#headSkin)"/>
+        <!-- Head rim (black goatskin border) -->
+        <ellipse cx="96" cy="82" rx="48" ry="16" fill="none" stroke="#3a2800" stroke-width="5" stroke-opacity=".5"/>
+        <!-- Kin ring (thin inner ring) -->
+        <ellipse cx="96" cy="82" rx="38" ry="12.5" fill="none" stroke="#c4a870" stroke-width=".8" stroke-opacity=".6"/>
+        <!-- Syahi (black center patch - offset slightly left on bayan) -->
+        <ellipse cx="91" cy="81" rx="18" ry="6" fill="url(#syahiB)"/>
+        <!-- Syahi highlight -->
+        <ellipse cx="88" cy="79.5" rx="6" ry="1.8" fill="rgba(255,255,255,.07)"/>
+        <!-- Top rim ring -->
+        <ellipse cx="96" cy="82" rx="48" ry="16" fill="none" stroke="#d4a843" stroke-width="1.2" stroke-opacity=".7"/>
+        <!-- Small knobs on rim -->
+        <circle cx="48" cy="82" r="2.5" fill="#b8860b" opacity=".8"/>
+        <circle cx="144" cy="82" r="2.5" fill="#b8860b" opacity=".8"/>
+        <circle cx="96" cy="66.5" r="2.5" fill="#b8860b" opacity=".8"/>
+        <circle cx="96" cy="97.5" r="2.5" fill="#b8860b" opacity=".8"/>
+
+        <!-- ═══ DAYAN (right, smaller, wood) ═══ -->
+        <!-- Shadow -->
+        <ellipse cx="196" cy="198" rx="38" ry="9" fill="rgba(0,0,0,.4)"/>
+        <!-- Bottom rim -->
+        <ellipse cx="196" cy="180" rx="35" ry="11" fill="url(#dayanBottom)" opacity=".8"/>
+        <!-- Cylinder body (taller, narrower) -->
+        <path d="M161 68 L161 180 Q161 191 196 191 Q231 191 231 180 L231 68" fill="url(#dayanBody)"/>
+        <!-- Rope lacing on body -->
+        <path d="M164 78 L164 174 M172 74 L172 181 M181 72 L181 183 M191 71 L191 184 M201 71 L201 184 M211 72 L211 183 M220 74 L220 181 M228 78 L228 174" stroke="rgba(212,168,67,.28)" stroke-width=".9"/>
+        <!-- Horizontal rope rings -->
+        <ellipse cx="196" cy="88" rx="34" ry="8" fill="none" stroke="rgba(212,168,67,.3)" stroke-width="1.1"/>
+        <ellipse cx="196" cy="108" rx="34" ry="8" fill="none" stroke="rgba(212,168,67,.24)" stroke-width="1"/>
+        <ellipse cx="196" cy="128" rx="34" ry="8" fill="none" stroke="rgba(212,168,67,.19)" stroke-width=".9"/>
+        <ellipse cx="196" cy="148" rx="34" ry="8" fill="none" stroke="rgba(212,168,67,.15)" stroke-width=".8"/>
+        <ellipse cx="196" cy="166" rx="34" ry="8" fill="none" stroke="rgba(212,168,67,.12)" stroke-width=".7"/>
+        <!-- Head -->
+        <ellipse cx="196" cy="70" rx="35" ry="11.5" fill="url(#headSkinD)"/>
+        <!-- Head rim -->
+        <ellipse cx="196" cy="70" rx="35" ry="11.5" fill="none" stroke="#3a2800" stroke-width="4.5" stroke-opacity=".45"/>
+        <!-- Kin ring -->
+        <ellipse cx="196" cy="70" rx="27" ry="8.5" fill="none" stroke="#c4a870" stroke-width=".7" stroke-opacity=".55"/>
+        <!-- Syahi (centered on dayan) -->
+        <ellipse cx="196" cy="69" rx="13" ry="4.2" fill="url(#syahiD)"/>
+        <!-- Syahi highlight -->
+        <ellipse cx="193" cy="68" rx="4" ry="1.3" fill="rgba(255,255,255,.06)"/>
+        <!-- Top rim ring -->
+        <ellipse cx="196" cy="70" rx="35" ry="11.5" fill="none" stroke="#d4a843" stroke-width="1.1" stroke-opacity=".65"/>
+        <!-- Knobs -->
+        <circle cx="161" cy="70" r="2" fill="#b8860b" opacity=".75"/>
+        <circle cx="231" cy="70" r="2" fill="#b8860b" opacity=".75"/>
+        <circle cx="196" cy="58.5" r="2" fill="#b8860b" opacity=".75"/>
+        <circle cx="196" cy="81.5" r="2" fill="#b8860b" opacity=".75"/>
+
+        <!-- Subtle gold shimmer at top -->
+        <ellipse cx="140" cy="10" rx="80" ry="18" fill="rgba(212,168,67,.04)"/>
       </svg>
       <div class="card-label"></div>
     </div>
@@ -533,14 +643,146 @@ footer{
   <a href="vocal.html" class="course-card reveal" style="transition-delay:.12s">
     <div class="card-art card-art-vocal">
       <div class="card-glow"></div>
-      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="45" y="14" width="30" height="50" rx="15" stroke="#c9a84c" stroke-width="1.5" fill="rgba(201,168,76,.06)"/>
-        <path d="M32 60 Q32 82 60 82 Q88 82 88 60" stroke="#c9a84c" stroke-width="1.5" fill="none"/>
-        <line x1="60" y1="82" x2="60" y2="102" stroke="#c9a84c" stroke-width="1.5"/>
-        <line x1="46" y1="102" x2="74" y2="102" stroke="#c9a84c" stroke-width="1.5"/>
-        <line x1="50" y1="36" x2="70" y2="36" stroke="#c9a84c" stroke-width=".9" opacity=".5"/>
-        <line x1="47" y1="45" x2="73" y2="45" stroke="#c9a84c" stroke-width=".9" opacity=".5"/>
-        <line x1="49" y1="54" x2="71" y2="54" stroke="#c9a84c" stroke-width=".9" opacity=".5"/>
+      <!-- Harmonium (Indian classical vocal accompaniment) -->
+      <svg viewBox="0 0 280 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="harmBody" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#2a1f0e"/>
+            <stop offset="40%" stop-color="#3d2e14"/>
+            <stop offset="100%" stop-color="#1a1208"/>
+          </linearGradient>
+          <linearGradient id="harmTop" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#4a3820"/>
+            <stop offset="100%" stop-color="#2e2010"/>
+          </linearGradient>
+          <linearGradient id="bellows" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#1a1208"/>
+            <stop offset="15%" stop-color="#3a2c14"/>
+            <stop offset="30%" stop-color="#1a1208"/>
+            <stop offset="45%" stop-color="#3a2c14"/>
+            <stop offset="60%" stop-color="#1a1208"/>
+            <stop offset="75%" stop-color="#3a2c14"/>
+            <stop offset="90%" stop-color="#1a1208"/>
+            <stop offset="100%" stop-color="#3a2c14"/>
+          </linearGradient>
+          <linearGradient id="whiteKey" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#f0e8d0"/>
+            <stop offset="100%" stop-color="#d4c89a"/>
+          </linearGradient>
+          <linearGradient id="frontPanel" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#3a2c14"/>
+            <stop offset="100%" stop-color="#241a0c"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Shadow on floor -->
+        <ellipse cx="152" cy="208" rx="100" ry="10" fill="rgba(0,0,0,.5)"/>
+
+        <!-- ═══ MAIN BODY ═══ -->
+        <!-- Side panels (3D perspective - left side visible) -->
+        <path d="M42 58 L42 178 L58 190 L58 68 Z" fill="#1e1408"/>
+        <path d="M238 58 L238 178 L254 162 L254 44 Z" fill="#241a0a"/>
+
+        <!-- Main front body -->
+        <rect x="58" y="58" width="180" height="132" rx="3" fill="url(#harmBody)"/>
+
+        <!-- Top surface (3D lid) -->
+        <path d="M42 58 L58 44 L254 44 L238 58 Z" fill="url(#harmTop)"/>
+        <path d="M58 44 L58 58 L238 58 L238 44 Z" fill="#3a2c16"/>
+
+        <!-- Decorative border on front -->
+        <rect x="62" y="62" width="172" height="124" rx="2" fill="none" stroke="rgba(201,168,76,.3)" stroke-width="1"/>
+        <rect x="65" y="65" width="166" height="118" rx="2" fill="none" stroke="rgba(201,168,76,.15)" stroke-width=".6"/>
+
+        <!-- ═══ BELLOWS (left side, folded) ═══ -->
+        <rect x="42" y="78" width="16" height="90" fill="url(#bellows)"/>
+        <!-- Bellows fold lines -->
+        <line x1="42" y1="88" x2="58" y2="88" stroke="rgba(201,168,76,.2)" stroke-width=".8"/>
+        <line x1="42" y1="99" x2="58" y2="99" stroke="rgba(201,168,76,.2)" stroke-width=".8"/>
+        <line x1="42" y1="110" x2="58" y2="110" stroke="rgba(201,168,76,.2)" stroke-width=".8"/>
+        <line x1="42" y1="121" x2="58" y2="121" stroke="rgba(201,168,76,.2)" stroke-width=".8"/>
+        <line x1="42" y1="132" x2="58" y2="132" stroke="rgba(201,168,76,.2)" stroke-width=".8"/>
+        <line x1="42" y1="143" x2="58" y2="143" stroke="rgba(201,168,76,.2)" stroke-width=".8"/>
+        <line x1="42" y1="154" x2="58" y2="154" stroke="rgba(201,168,76,.2)" stroke-width=".8"/>
+        <!-- Bellows metal edges -->
+        <rect x="42" y="78" width="16" height="90" fill="none" stroke="rgba(201,168,76,.35)" stroke-width="1"/>
+
+        <!-- ═══ FRONT LATTICE / GRILLE ═══ -->
+        <rect x="70" y="70" width="156" height="60" rx="2" fill="url(#frontPanel)"/>
+        <!-- Decorative lattice pattern -->
+        <rect x="73" y="73" width="150" height="54" rx="1" fill="none" stroke="rgba(201,168,76,.22)" stroke-width=".7"/>
+        <!-- Vertical lattice bars -->
+        <line x1="83" y1="73" x2="83" y2="127" stroke="rgba(201,168,76,.18)" stroke-width=".8"/>
+        <line x1="96" y1="73" x2="96" y2="127" stroke="rgba(201,168,76,.18)" stroke-width=".8"/>
+        <line x1="109" y1="73" x2="109" y2="127" stroke="rgba(201,168,76,.18)" stroke-width=".8"/>
+        <line x1="122" y1="73" x2="122" y2="127" stroke="rgba(201,168,76,.18)" stroke-width=".8"/>
+        <line x1="135" y1="73" x2="135" y2="127" stroke="rgba(201,168,76,.18)" stroke-width=".8"/>
+        <line x1="148" y1="73" x2="148" y2="127" stroke="rgba(201,168,76,.18)" stroke-width=".8"/>
+        <line x1="161" y1="73" x2="161" y2="127" stroke="rgba(201,168,76,.18)" stroke-width=".8"/>
+        <line x1="174" y1="73" x2="174" y2="127" stroke="rgba(201,168,76,.18)" stroke-width=".8"/>
+        <line x1="187" y1="73" x2="187" y2="127" stroke="rgba(201,168,76,.18)" stroke-width=".8"/>
+        <line x1="200" y1="73" x2="200" y2="127" stroke="rgba(201,168,76,.18)" stroke-width=".8"/>
+        <line x1="213" y1="73" x2="213" y2="127" stroke="rgba(201,168,76,.18)" stroke-width=".8"/>
+        <!-- Horizontal lattice bars -->
+        <line x1="73" y1="88" x2="223" y2="88" stroke="rgba(201,168,76,.18)" stroke-width=".8"/>
+        <line x1="73" y1="103" x2="223" y2="103" stroke="rgba(201,168,76,.18)" stroke-width=".8"/>
+        <line x1="73" y1="118" x2="223" y2="118" stroke="rgba(201,168,76,.18)" stroke-width=".8"/>
+        <!-- Diagonal cross pattern in lattice cells -->
+        <path d="M73 73 L83 88 M83 73 L73 88 M83 73 L96 88 M96 73 L83 88" stroke="rgba(201,168,76,.08)" stroke-width=".6"/>
+
+        <!-- ═══ STOP KNOBS (above keyboard) ═══ -->
+        <circle cx="82" cy="143" r="5" fill="#2a2014" stroke="rgba(201,168,76,.5)" stroke-width="1"/>
+        <circle cx="82" cy="143" r="2.5" fill="#c9a84c" opacity=".7"/>
+        <circle cx="100" cy="143" r="5" fill="#2a2014" stroke="rgba(201,168,76,.5)" stroke-width="1"/>
+        <circle cx="100" cy="143" r="2.5" fill="#c9a84c" opacity=".7"/>
+        <circle cx="118" cy="143" r="5" fill="#2a2014" stroke="rgba(201,168,76,.5)" stroke-width="1"/>
+        <circle cx="118" cy="143" r="2.5" fill="#c9a84c" opacity=".5"/>
+        <!-- Stop labels -->
+        <rect x="74" y="150" width="16" height="4" rx="1" fill="rgba(201,168,76,.1)"/>
+        <rect x="92" y="150" width="16" height="4" rx="1" fill="rgba(201,168,76,.1)"/>
+        <rect x="110" y="150" width="16" height="4" rx="1" fill="rgba(201,168,76,.1)"/>
+
+        <!-- ═══ KEYBOARD ═══ -->
+        <!-- Keyboard bed / shelf -->
+        <rect x="68" y="155" width="160" height="5" fill="#1a1208"/>
+        <!-- White keys (13 white keys) -->
+        <!-- Key width ~11px each, height 32px -->
+        <rect x="70"  y="160" width="10" height="30" rx="1" fill="url(#whiteKey)" stroke="#8a7040" stroke-width=".5"/>
+        <rect x="82"  y="160" width="10" height="30" rx="1" fill="url(#whiteKey)" stroke="#8a7040" stroke-width=".5"/>
+        <rect x="94"  y="160" width="10" height="30" rx="1" fill="url(#whiteKey)" stroke="#8a7040" stroke-width=".5"/>
+        <rect x="106" y="160" width="10" height="30" rx="1" fill="url(#whiteKey)" stroke="#8a7040" stroke-width=".5"/>
+        <rect x="118" y="160" width="10" height="30" rx="1" fill="url(#whiteKey)" stroke="#8a7040" stroke-width=".5"/>
+        <rect x="130" y="160" width="10" height="30" rx="1" fill="url(#whiteKey)" stroke="#8a7040" stroke-width=".5"/>
+        <rect x="142" y="160" width="10" height="30" rx="1" fill="url(#whiteKey)" stroke="#8a7040" stroke-width=".5"/>
+        <rect x="154" y="160" width="10" height="30" rx="1" fill="url(#whiteKey)" stroke="#8a7040" stroke-width=".5"/>
+        <rect x="166" y="160" width="10" height="30" rx="1" fill="url(#whiteKey)" stroke="#8a7040" stroke-width=".5"/>
+        <rect x="178" y="160" width="10" height="30" rx="1" fill="url(#whiteKey)" stroke="#8a7040" stroke-width=".5"/>
+        <rect x="190" y="160" width="10" height="30" rx="1" fill="url(#whiteKey)" stroke="#8a7040" stroke-width=".5"/>
+        <rect x="202" y="160" width="10" height="30" rx="1" fill="url(#whiteKey)" stroke="#8a7040" stroke-width=".5"/>
+        <rect x="214" y="160" width="10" height="30" rx="1" fill="url(#whiteKey)" stroke="#8a7040" stroke-width=".5"/>
+        <!-- Black keys -->
+        <rect x="78"  y="160" width="7" height="19" rx="1" fill="#111" stroke="#c9a84c" stroke-width=".4" stroke-opacity=".4"/>
+        <rect x="90"  y="160" width="7" height="19" rx="1" fill="#111" stroke="#c9a84c" stroke-width=".4" stroke-opacity=".4"/>
+        <rect x="114" y="160" width="7" height="19" rx="1" fill="#111" stroke="#c9a84c" stroke-width=".4" stroke-opacity=".4"/>
+        <rect x="126" y="160" width="7" height="19" rx="1" fill="#111" stroke="#c9a84c" stroke-width=".4" stroke-opacity=".4"/>
+        <rect x="138" y="160" width="7" height="19" rx="1" fill="#111" stroke="#c9a84c" stroke-width=".4" stroke-opacity=".4"/>
+        <rect x="162" y="160" width="7" height="19" rx="1" fill="#111" stroke="#c9a84c" stroke-width=".4" stroke-opacity=".4"/>
+        <rect x="174" y="160" width="7" height="19" rx="1" fill="#111" stroke="#c9a84c" stroke-width=".4" stroke-opacity=".4"/>
+        <rect x="198" y="160" width="7" height="19" rx="1" fill="#111" stroke="#c9a84c" stroke-width=".4" stroke-opacity=".4"/>
+        <rect x="210" y="160" width="7" height="19" rx="1" fill="#111" stroke="#c9a84c" stroke-width=".4" stroke-opacity=".4"/>
+
+        <!-- Keyboard bottom trim -->
+        <rect x="68" y="190" width="162" height="6" rx="1" fill="#1a1208" stroke="rgba(201,168,76,.2)" stroke-width=".7"/>
+
+        <!-- ═══ DECORATIVE GOLD TRIM ON LID ═══ -->
+        <path d="M58 44 Q148 36 238 44" stroke="rgba(201,168,76,.4)" stroke-width="1" fill="none"/>
+        <!-- Name plate area -->
+        <rect x="110" y="47" width="76" height="8" rx="2" fill="rgba(201,168,76,.12)" stroke="rgba(201,168,76,.3)" stroke-width=".7"/>
+        <line x1="120" y1="51" x2="178" y2="51" stroke="rgba(201,168,76,.25)" stroke-width=".6"/>
+
+        <!-- Ambient notes floating -->
+        <text x="240" y="80" font-family="serif" font-size="18" fill="rgba(201,168,76,.18)" transform="rotate(-15,240,80)">&#x266A;</text>
+        <text x="248" y="108" font-family="serif" font-size="13" fill="rgba(201,168,76,.12)" transform="rotate(10,248,108)">&#x266B;</text>
       </svg>
       <div class="card-label"></div>
     </div>
