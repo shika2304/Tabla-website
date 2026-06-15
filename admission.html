@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admission Form — Ragranjani Music Academy</title>
+<meta name="description" content="Apply for Tabla or Vocal classes at Ragranjani Music Academy, Belgharia, Nimta, Kolkata. Affiliated Sura Bharati Sangeet Kala Kendra.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-deep:#0d0805;
+  --bg-warm:#160c06;
+  --bg-panel:#1d1008;
+  --gold:#d4a843;
+  --gold-bright:#f0cf7e;
+  --gold-dim:rgba(212,168,67,.28);
+  --maroon:#6e1f33;
+  --cream:#f5e9d3;
+  --cream-dim:rgba(245,233,211,.75);
+  --font-display:'Cinzel Decorative',serif;
+  --font-head:'Cinzel',serif;
+  --font-body:'Cormorant Garamond',serif;
+  --maxw:860px;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+body{
+  background:var(--bg-deep);
+  color:var(--cream);
+  font-family:var(--font-body);
+  font-size:1.1rem;
+  line-height:1.7;
+  min-height:100vh;
+}
+
+/* ===== BACK NAV ===== */
+.back-bar{
+  background:var(--bg-panel);
+  border-bottom:1px solid var(--gold-dim);
+  padding:.7rem 1.5rem;
+  display:flex;align-items:center;gap:1.4rem;
+}
+.back-link{
+  font-family:var(--font-head);
+  font-size:.72rem;
+  letter-spacing:.18em;
+  color:var(--gold);
+  text-decoration:none;
+  text-transform:uppercase;
+  display:flex;align-items:center;gap:.4rem;
+  transition:color .2s;
+}
+.back-link:hover{color:var(--gold-bright)}
+.back-link svg{width:14px;height:14px}
+.back-sep{color:var(--gold-dim);font-size:.85em}
+
+/* ===== HEADER ===== */
+header{
+  text-align:center;
+  padding:2.8rem 1.5rem 1.6rem;
+  border-bottom:1px solid var(--gold-dim);
+  position:relative;
+}
+.academy-name{
+  font-family:var(--font-display);
+  font-size:clamp(1.4rem,4vw,2.4rem);
+  color:var(--gold-bright);
+  letter-spacing:.06em;
+  line-height:1.2;
+  text-shadow:0 0 32px rgba(212,168,67,.25);
+}
+.affil-tag{
+  display:inline-block;
+  font-family:var(--font-head);
+  font-size:.72rem;
+  letter-spacing:.22em;
+  color:var(--gold);
+  text-transform:uppercase;
+  border:1px solid var(--gold-dim);
+  padding:.3rem 1rem;
+  border-radius:2px;
+  margin:.9rem 0 .5rem;
+}
+.header-addr{
+  font-size:.9rem;
+  color:rgba(245,233,211,.5);
+  font-style:italic;
+}
+.form-title{
+  font-family:var(--font-head);
+  font-size:1.1rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-top:1.8rem;
+  position:relative;
+  display:inline-flex;align-items:center;gap:.8rem;
+}
+.form-title::before,.form-title::after{
+  content:'';display:inline-block;
+  width:40px;height:1px;
+  background:var(--gold-dim);
+}
+
+/* ===== LAYOUT ===== */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 1.5rem}
+main{padding:2.4rem 1.5rem 4rem}
+
+/* ===== FORM ===== */
+.form-card{
+  max-width:var(--maxw);
+  margin:0 auto;
+  background:linear-gradient(145deg,var(--bg-warm),var(--bg-panel));
+  border:1px solid var(--gold-dim);
+  border-radius:4px;
+  padding:2.4rem 2.4rem 2.8rem;
+}
+@media(max-width:600px){.form-card{padding:1.4rem 1.1rem 2rem}}
+
+/* Photo box */
+.photo-row{
+  display:flex;justify-content:flex-end;margin-bottom:1.4rem;
+}
+.photo-box{
+  width:100px;height:120px;
+  border:1.5px dashed var(--gold-dim);
+  border-radius:2px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:.4rem;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  transition:border-color .2s;
+}
+.photo-box:hover{border-color:var(--gold)}
+.photo-box input[type=file]{
+  position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
+}
+.photo-box .ph-label{
+  font-family:var(--font-head);
+  font-size:.6rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold-dim);
+  pointer-events:none;text-align:center;
+}
+.photo-box svg{width:22px;height:22px;color:var(--gold-dim);pointer-events:none}
+#photoPreview{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;display:none;
+}
+
+/* Fields */
+.field-group{
+  display:grid;gap:1.4rem;
+  margin-bottom:1.4rem;
+}
+.field-group.cols-2{grid-template-columns:1fr 1fr}
+.field-group.cols-3{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:600px){
+  .field-group.cols-2,.field-group.cols-3{grid-template-columns:1fr}
+}
+
+.field{display:flex;flex-direction:column;gap:.32rem}
+.field label{
+  font-family:var(--font-head);
+  font-size:.62rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+.field label .req{color:var(--maroon);margin-left:.15em}
+.field input,
+.field select,
+.field textarea{
+  background:rgba(255,255,255,.04);
+  border:none;
+  border-bottom:1.5px solid var(--gold-dim);
+  color:var(--cream);
+  font-family:var(--font-body);
+  font-size:1.05rem;
+  padding:.5rem .3rem;
+  outline:none;
+  transition:border-color .2s;
+  width:100%;
+  border-radius:0;
+  -webkit-appearance:none;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:var(--gold);
+  background:rgba(212,168,67,.04);
+}
+.field input::placeholder{color:rgba(245,233,211,.25)}
+.field select{cursor:pointer}
+.field select option{background:#1d1008;color:var(--cream)}
+.field textarea{
+  resize:vertical;
+  min-height:70px;
+  border:1.5px solid var(--gold-dim);
+  border-radius:2px;
+  padding:.6rem .7rem;
+  line-height:1.6;
+}
+.field textarea:focus{border-color:var(--gold)}
+
+/* Course selector */
+.course-pick{
+  display:flex;gap:1rem;flex-wrap:wrap;
+}
+.course-opt{
+  flex:1;min-width:140px;
+  border:1.5px solid var(--gold-dim);
+  border-radius:3px;
+  padding:1rem 1.2rem;
+  cursor:pointer;
+  transition:border-color .25s,background .25s;
+  position:relative;
+}
+.course-opt input[type=radio]{
+  position:absolute;opacity:0;width:0;height:0;
+}
+.course-opt .co-label{
+  font-family:var(--font-head);
+  font-size:.9rem;
+  letter-spacing:.1em;
+  color:var(--cream-dim);
+  display:block;
+  transition:color .2s;
+}
+.course-opt .co-sub{
+  font-size:.88rem;
+  color:rgba(245,233,211,.45);
+  font-style:italic;
+  display:block;
+  margin-top:.18rem;
+}
+.course-opt:hover{border-color:rgba(212,168,67,.5)}
+.course-opt.selected{
+  border-color:var(--gold);
+  background:rgba(212,168,67,.07);
+}
+.course-opt.selected .co-label{color:var(--gold-bright)}
+
+/* Divider */
+.form-divider{
+  height:1px;
+  background:linear-gradient(to right,transparent,var(--gold-dim),transparent);
+  margin:1.8rem 0;
+}
+
+/* Section label */
+.section-label{
+  font-family:var(--font-head);
+  font-size:.7rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--gold);
+  opacity:.7;
+  margin-bottom:1rem;
+}
+
+/* Notice */
+.form-notice{
+  background:rgba(212,168,67,.06);
+  border:1px solid var(--gold-dim);
+  border-radius:3px;
+  padding:1rem 1.2rem;
+  font-size:.92rem;
+  color:rgba(245,233,211,.6);
+  margin-bottom:1.8rem;
+  font-style:italic;
+}
+.form-notice strong{color:var(--gold);font-style:normal}
+
+/* Submit */
+.form-actions{
+  display:flex;gap:1rem;align-items:center;flex-wrap:wrap;
+  margin-top:2rem;
+}
+.btn-submit{
+  font-family:var(--font-head);
+  font-size:.82rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--bg-deep);
+  background:linear-gradient(135deg,var(--gold),var(--gold-bright));
+  border:none;
+  padding:.82rem 2.2rem;
+  border-radius:2px;
+  cursor:pointer;
+  transition:opacity .2s,transform .2s;
+  display:inline-flex;align-items:center;gap:.5rem;
+}
+.btn-submit:hover{opacity:.9;transform:translateY(-1px)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-submit svg{width:16px;height:16px}
+.btn-print{
+  font-family:var(--font-head);
+  font-size:.78rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--gold);
+  background:transparent;
+  border:1px solid var(--gold-dim);
+  padding:.78rem 1.6rem;
+  border-radius:2px;
+  cursor:pointer;
+  transition:border-color .2s,color .2s;
+  display:inline-flex;align-items:center;gap:.5rem;
+}
+.btn-print:hover{border-color:var(--gold);color:var(--gold-bright)}
+.btn-print svg{width:15px;height:15px}
+
+/* Toast */
+#toast{
+  position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--bg-panel);border:1px solid var(--gold-dim);
+  color:var(--cream);font-family:var(--font-head);font-size:.82rem;
+  letter-spacing:.1em;padding:.9rem 1.8rem;border-radius:3px;
+  box-shadow:0 8px 24px rgba(0,0,0,.5);
+  opacity:0;transition:opacity .35s,transform .35s;z-index:999;
+  white-space:nowrap;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.success{border-color:rgba(212,168,67,.6)}
+#toast.error{border-color:rgba(200,60,60,.5);color:#e88}
+
+/* Error state */
+.field input.err,
+.field select.err,
+.field textarea.err{border-color:rgba(200,60,60,.7)}
+.field .err-msg{
+  font-size:.82rem;color:#e07070;
+  font-style:italic;display:none;
+}
+.field input.err ~ .err-msg,
+.field select.err ~ .err-msg,
+.field textarea.err ~ .err-msg{display:block}
+
+/* ===== PRINT STYLES ===== */
+@media print{
+  body{background:#fff;color:#111}
+  .back-bar,.form-actions,#toast{display:none}
+  header{border-bottom:2px solid #b8860b;padding:1rem}
+  .academy-name{color:#7a4f00;font-size:1.8rem}
+  .affil-tag{border-color:#b8860b;color:#7a4f00}
+  .form-card{
+    background:#fff;border:1.5px solid #b8860b;
+    box-shadow:none;padding:1.5rem;
+  }
+  .field label{color:#7a4f00}
+  .field input,.field select,.field textarea{
+    border-bottom:1px solid #999;color:#111;background:transparent;
+  }
+  .course-opt{border-color:#ccc}
+  .course-opt.selected{border-color:#b8860b;background:#fffbf0}
+  .section-label{color:#7a4f00}
+  .form-notice{background:#fffbf0;border-color:#b8860b;color:#555}
+  .form-divider{background:#b8860b}
+  .photo-box{border:1.5px solid #b8860b}
+  .ph-label,.photo-box svg{color:#b8860b}
+}
+</style>
+</head>
+<body>
+
+<!-- Back navigation -->
+<nav class="back-bar">
+  <a href="index.html" class="back-link">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 8H3M7 4l-4 4 4 4"/></svg>
+    Home
+  </a>
+  <span class="back-sep">|</span>
+  <a href="tabla.html" class="back-link">Tabla</a>
+  <span class="back-sep">|</span>
+  <a href="vocal.html" class="back-link">Vocal</a>
+</nav>
+
+<!-- Header -->
+<header>
+  <div class="academy-name">Ragranjani Music Academy</div>
+  <div class="affil-tag">Affiliated to Sura Bharati Sangeet Kala Kendra</div>
+  <div class="header-addr">7, S.B Roy Choudhury Road, P.O. Nimta, Kolkata &ndash; 700049</div>
+  <div class="form-title">Admission Form</div>
+</header>
+
+<main>
+<div class="form-card">
+
+  <!-- Photo -->
+  <div class="photo-row">
+    <div class="photo-box" title="Click to upload photo">
+      <img id="photoPreview" alt="Student photo preview">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span class="ph-label">Photo</span>
+      <input type="file" id="photoInput" accept="image/*" aria-label="Upload student photo">
+    </div>
+  </div>
+
+  <form id="admForm" novalidate>
+
+    <!-- Course selection -->
+    <div class="section-label">Course Applied For</div>
+    <div class="course-pick" role="group" aria-label="Select course">
+      <label class="course-opt selected" id="opt-tabla">
+        <input type="radio" name="course" value="Tabla" checked>
+        <span class="co-label">Tabla Classes</span>
+        <span class="co-sub">Percussion &middot; Basic to Advanced</span>
+      </label>
+      <label class="course-opt" id="opt-vocal">
+        <input type="radio" name="course" value="Vocal &amp; Music">
+        <span class="co-label">Vocal &amp; Music Classes</span>
+        <span class="co-sub">Classical &middot; Rabindra &middot; Nazrul &amp; more</span>
+      </label>
+    </div>
+
+    <div class="form-divider"></div>
+
+    <!-- Student name -->
+    <div class="field-group">
+      <div class="field">
+        <label for="studentName">Name of the Student (Block Letters)<span class="req">*</span></label>
+        <input type="text" id="studentName" name="studentName" placeholder="FULL NAME IN CAPITALS" autocomplete="name" required>
+        <span class="err-msg">Please enter the student&rsquo;s full name.</span>
+      </div>
+    </div>
+
+    <!-- Guardian -->
+    <div class="field-group">
+      <div class="field">
+        <label for="guardian">Guardian&rsquo;s Name (Father&rsquo;s / Mother&rsquo;s)<span class="req">*</span></label>
+        <input type="text" id="guardian" name="guardian" placeholder="Father's or Mother's full name" required>
+        <span class="err-msg">Please enter the guardian&rsquo;s name.</span>
+      </div>
+    </div>
+
+    <!-- DOB + Gender -->
+    <div class="field-group cols-2">
+      <div class="field">
+        <label for="dob">Date of Birth<span class="req">*</span></label>
+        <input type="date" id="dob" name="dob" required>
+        <span class="err-msg">Please enter date of birth.</span>
+      </div>
+      <div class="field">
+        <label for="gender">Gender<span class="req">*</span></label>
+        <select id="gender" name="gender" required>
+          <option value="">Select</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+          <option>Prefer not to say</option>
+        </select>
+        <span class="err-msg">Please select gender.</span>
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div class="field-group">
+      <div class="field">
+        <label for="education">Educational Qualification<span class="req">*</span></label>
+        <input type="text" id="education" name="education" placeholder="e.g. Class 8, B.A., etc." required>
+        <span class="err-msg">Please enter educational qualification.</span>
+      </div>
+    </div>
+
+    <!-- Address -->
+    <div class="field-group">
+      <div class="field">
+        <label for="address">Residential Address<span class="req">*</span></label>
+        <textarea id="address" name="address" placeholder="House no., Street, Area, City" required></textarea>
+        <span class="err-msg">Please enter residential address.</span>
+      </div>
+    </div>
+
+    <!-- Email + PIN -->
+    <div class="field-group cols-2">
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="student@email.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="pin">PIN Code<span class="req">*</span></label>
+        <input type="text" id="pin" name="pin" placeholder="700049" maxlength="6" pattern="\d{6}" required>
+        <span class="err-msg">Please enter a valid 6-digit PIN.</span>
+      </div>
+    </div>
+
+    <!-- Mobile + Subject (auto-filled from course) -->
+    <div class="field-group cols-2">
+      <div class="field">
+        <label for="mobile">Mobile Number<span class="req">*</span></label>
+        <input type="tel" id="mobile" name="mobile" placeholder="+91 XXXXX XXXXX" autocomplete="tel" required>
+        <span class="err-msg">Please enter a mobile number.</span>
+      </div>
+      <div class="field">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" readonly style="opacity:.65;cursor:default" value="Tabla">
+      </div>
+    </div>
+
+    <!-- Nationality + Religion + Date of Admission -->
+    <div class="field-group cols-3">
+      <div class="field">
+        <label for="nationality">Nationality</label>
+        <input type="text" id="nationality" name="nationality" placeholder="Indian" value="Indian">
+      </div>
+      <div class="field">
+        <label for="religion">Religion</label>
+        <input type="text" id="religion" name="religion" placeholder="e.g. Hindu">
+      </div>
+      <div class="field">
+        <label for="admDate">Date of Admission</label>
+        <input type="date" id="admDate" name="admDate" readonly style="opacity:.65;cursor:default">
+      </div>
+    </div>
+
+    <div class="form-divider"></div>
+
+    <!-- Notice -->
+    <div class="form-notice">
+      <strong>How it works:</strong> Clicking &ldquo;Submit Application&rdquo; will open your email app with a pre-filled admission form addressed to the academy. Simply press <strong>Send</strong> to complete your application. You may also print this form and submit it in person.
+    </div>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <button type="submit" class="btn-submit" id="submitBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        Submit Application
+      </button>
+      <button type="button" class="btn-print" onclick="window.print()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print Form
+      </button>
+    </div>
+
+  </form>
+</div>
+</main>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+// Set today's date for admission date
+document.getElementById("admDate").value = new Date().toISOString().split("T")[0];
+
+// Photo preview
+document.getElementById("photoInput").addEventListener("change", function(){
+  var file = this.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var img = document.getElementById("photoPreview");
+    img.src = e.target.result;
+    img.style.display = "block";
+  };
+  reader.readAsDataURL(file);
+});
+
+// Course radio toggle
+document.querySelectorAll('input[name="course"]').forEach(function(radio){
+  radio.addEventListener("change", function(){
+    document.querySelectorAll(".course-opt").forEach(function(el){ el.classList.remove("selected"); });
+    this.closest(".course-opt").classList.add("selected");
+    document.getElementById("subject").value = this.value;
+  });
+});
+
+// Toast helper
+function showToast(msg, type){
+  var t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "show " + (type||"");
+  clearTimeout(t._tid);
+  t._tid = setTimeout(function(){ t.className = ""; }, 3800);
+}
+
+// Validation
+function validate(){
+  var ok = true;
+  var required = ["studentName","guardian","dob","gender","education","address","pin","mobile"];
+  required.forEach(function(id){
+    var el = document.getElementById(id);
+    if(!el.value.trim()){
+      el.classList.add("err"); ok = false;
+    } else {
+      el.classList.remove("err");
+    }
+  });
+  // PIN format
+  var pin = document.getElementById("pin");
+  if(pin.value && !/^\d{6}$/.test(pin.value.trim())){
+    pin.classList.add("err"); ok = false;
+  }
+  return ok;
+}
+
+// Format date for display
+function fmtDate(val){
+  if(!val) return "Not specified";
+  var d = new Date(val + "T00:00:00");
+  return d.toLocaleDateString("en-IN",{day:"2-digit",month:"long",year:"numeric"});
+}
+
+// Submit
+document.getElementById("admForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  if(!validate()){
+    showToast("Please fill in all required fields.", "error");
+    return;
+  }
+
+  var course   = document.querySelector('input[name="course"]:checked').value;
+  var name     = document.getElementById("studentName").value.trim().toUpperCase();
+  var guardian = document.getElementById("guardian").value.trim();
+  var dob      = fmtDate(document.getElementById("dob").value);
+  var gender   = document.getElementById("gender").value;
+  var education= document.getElementById("education").value.trim();
+  var address  = document.getElementById("address").value.trim();
+  var email    = document.getElementById("email").value.trim();
+  var pin      = document.getElementById("pin").value.trim();
+  var mobile   = document.getElementById("mobile").value.trim();
+  var natl     = document.getElementById("nationality").value.trim();
+  var religion = document.getElementById("religion").value.trim();
+  var admDate  = fmtDate(document.getElementById("admDate").value);
+
+  var subject = "Admission Application — " + name + " (" + course + ")";
+
+  var body = [
+    "RAGRANJANI MUSIC ACADEMY — ADMISSION FORM",
+    "Affiliated to Sura Bharati Sangeet Kala Kendra",
+    "7, S.B Roy Choudhury Road, Nimta, Kolkata - 700049",
+    "",
+    "═══════════════════════════════════════════",
+    "COURSE APPLIED FOR: " + course,
+    "═══════════════════════════════════════════",
+    "",
+    "STUDENT DETAILS",
+    "───────────────────────────────────────────",
+    "Name of Student     : " + name,
+    "Guardian's Name     : " + guardian,
+    "Date of Birth       : " + dob,
+    "Gender              : " + gender,
+    "Educational Qual.   : " + education,
+    "Nationality         : " + (natl || "Not specified"),
+    "Religion            : " + (religion || "Not specified"),
+    "",
+    "CONTACT DETAILS",
+    "───────────────────────────────────────────",
+    "Mobile Number       : " + mobile,
+    "Email               : " + (email || "Not provided"),
+    "Residential Address : " + address,
+    "PIN Code            : " + pin,
+    "",
+    "ADMISSION",
+    "───────────────────────────────────────────",
+    "Subject             : " + course,
+    "Date of Admission   : " + admDate,
+    "",
+    "═══════════════════════════════════════════",
+    "This application was submitted via the Ragranjani Music Academy website.",
+    "Please contact the student at the number above to confirm their admission."
+  ].join("\n");
+
+  var to = "ragranjanimusicacademy@gmail.com,nirmalya.sen358@gmail.com";
+  var mailto = "mailto:" + to
+    + "?subject=" + encodeURIComponent(subject)
+    + "&body="    + encodeURIComponent(body);
+
+  // mailto URLs have a length limit in some clients; warn if very long
+  if(mailto.length > 2000){
+    showToast("Opening email client…", "success");
+  }
+
+  window.location.href = mailto;
+
+  showToast("Email client opening — please press Send to submit.", "success");
+});
+
+// Remove error on input
+document.querySelectorAll(".field input,.field select,.field textarea").forEach(function(el){
+  el.addEventListener("input", function(){ this.classList.remove("err"); });
+});
+</script>
+</body>
+</html>
