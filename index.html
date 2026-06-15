@@ -258,12 +258,14 @@ header{
 }
 .card-art-tabla{background:radial-gradient(ellipse at 50% 60%,#2e1508 0%,#120a06 75%)}
 .card-art-vocal{background:radial-gradient(ellipse at 50% 60%,#160d2a 0%,#09070f 75%)}
-.card-art svg{
+.card-photo{
+  position:absolute;inset:0;
   width:100%;height:100%;
-  opacity:.82;
+  object-fit:cover;object-position:center center;
+  opacity:.9;
   transition:opacity .4s,transform .4s var(--ease);
 }
-.course-card:hover .card-art svg{opacity:1;transform:scale(1.04)}
+.course-card:hover .card-photo{opacity:1;transform:scale(1.05)}
 
 .card-glow{
   position:absolute;
@@ -502,124 +504,7 @@ footer{
   <!-- Tabla -->
   <a href="tabla.html" class="course-card reveal">
     <div class="card-art card-art-tabla">
-      <div class="card-glow"></div>
-      <!-- Tabla pair: Dayan (right, wood) + Bayan (left, copper) -->
-      <svg viewBox="0 0 280 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <!-- Bayan body gradient (copper/brass) -->
-          <linearGradient id="bayanBody" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#3d1e00"/>
-            <stop offset="30%" stop-color="#b8712a"/>
-            <stop offset="55%" stop-color="#d4943c"/>
-            <stop offset="75%" stop-color="#a86020"/>
-            <stop offset="100%" stop-color="#3a1a00"/>
-          </linearGradient>
-          <linearGradient id="bayanBottom" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#8c5020"/>
-            <stop offset="100%" stop-color="#2a1000"/>
-          </linearGradient>
-          <!-- Dayan body gradient (light wood) -->
-          <linearGradient id="dayanBody" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#2a1506"/>
-            <stop offset="25%" stop-color="#7a4a18"/>
-            <stop offset="50%" stop-color="#c47c30"/>
-            <stop offset="75%" stop-color="#8a5020"/>
-            <stop offset="100%" stop-color="#281200"/>
-          </linearGradient>
-          <linearGradient id="dayanBottom" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#6a3c14"/>
-            <stop offset="100%" stop-color="#1e0e04"/>
-          </linearGradient>
-          <!-- Head skin gradient -->
-          <radialGradient id="headSkin" cx="50%" cy="45%" r="55%">
-            <stop offset="0%" stop-color="#f0e4c8"/>
-            <stop offset="70%" stop-color="#d4c49c"/>
-            <stop offset="100%" stop-color="#b8a87a"/>
-          </radialGradient>
-          <radialGradient id="headSkinD" cx="50%" cy="45%" r="55%">
-            <stop offset="0%" stop-color="#ede2c5"/>
-            <stop offset="70%" stop-color="#cfc09a"/>
-            <stop offset="100%" stop-color="#b0a072"/>
-          </radialGradient>
-          <!-- Syahi gradient -->
-          <radialGradient id="syahiB" cx="45%" cy="40%" r="60%">
-            <stop offset="0%" stop-color="#2a2a2a"/>
-            <stop offset="100%" stop-color="#080808"/>
-          </radialGradient>
-          <radialGradient id="syahiD" cx="45%" cy="40%" r="60%">
-            <stop offset="0%" stop-color="#222"/>
-            <stop offset="100%" stop-color="#050505"/>
-          </radialGradient>
-        </defs>
-
-        <!-- ═══ BAYAN (left, larger, copper) ═══ -->
-        <!-- Shadow -->
-        <ellipse cx="96" cy="198" rx="52" ry="10" fill="rgba(0,0,0,.45)"/>
-        <!-- Bottom rim -->
-        <ellipse cx="96" cy="176" rx="48" ry="14" fill="url(#bayanBottom)" opacity=".8"/>
-        <!-- Cylinder body -->
-        <path d="M48 80 L48 176 Q48 190 96 190 Q144 190 144 176 L144 80" fill="url(#bayanBody)"/>
-        <!-- Rope lacing on body -->
-        <path d="M52 90 L52 172 M60 86 L60 178 M70 84 L70 181 M82 83 L82 182 M96 83 L96 182 M110 83 L110 182 M122 84 L122 181 M132 86 L132 178 M140 90 L140 172" stroke="rgba(212,168,67,.3)" stroke-width=".9"/>
-        <!-- Horizontal rope rings -->
-        <ellipse cx="96" cy="100" rx="47" ry="10" fill="none" stroke="rgba(212,168,67,.35)" stroke-width="1.2"/>
-        <ellipse cx="96" cy="118" rx="47" ry="10" fill="none" stroke="rgba(212,168,67,.28)" stroke-width="1"/>
-        <ellipse cx="96" cy="136" rx="47" ry="10" fill="none" stroke="rgba(212,168,67,.22)" stroke-width=".9"/>
-        <ellipse cx="96" cy="155" rx="47" ry="10" fill="none" stroke="rgba(212,168,67,.18)" stroke-width=".8"/>
-        <!-- Head (pudi) -->
-        <ellipse cx="96" cy="82" rx="48" ry="16" fill="url(#headSkin)"/>
-        <!-- Head rim (black goatskin border) -->
-        <ellipse cx="96" cy="82" rx="48" ry="16" fill="none" stroke="#3a2800" stroke-width="5" stroke-opacity=".5"/>
-        <!-- Kin ring (thin inner ring) -->
-        <ellipse cx="96" cy="82" rx="38" ry="12.5" fill="none" stroke="#c4a870" stroke-width=".8" stroke-opacity=".6"/>
-        <!-- Syahi (black center patch - offset slightly left on bayan) -->
-        <ellipse cx="91" cy="81" rx="18" ry="6" fill="url(#syahiB)"/>
-        <!-- Syahi highlight -->
-        <ellipse cx="88" cy="79.5" rx="6" ry="1.8" fill="rgba(255,255,255,.07)"/>
-        <!-- Top rim ring -->
-        <ellipse cx="96" cy="82" rx="48" ry="16" fill="none" stroke="#d4a843" stroke-width="1.2" stroke-opacity=".7"/>
-        <!-- Small knobs on rim -->
-        <circle cx="48" cy="82" r="2.5" fill="#b8860b" opacity=".8"/>
-        <circle cx="144" cy="82" r="2.5" fill="#b8860b" opacity=".8"/>
-        <circle cx="96" cy="66.5" r="2.5" fill="#b8860b" opacity=".8"/>
-        <circle cx="96" cy="97.5" r="2.5" fill="#b8860b" opacity=".8"/>
-
-        <!-- ═══ DAYAN (right, smaller, wood) ═══ -->
-        <!-- Shadow -->
-        <ellipse cx="196" cy="198" rx="38" ry="9" fill="rgba(0,0,0,.4)"/>
-        <!-- Bottom rim -->
-        <ellipse cx="196" cy="180" rx="35" ry="11" fill="url(#dayanBottom)" opacity=".8"/>
-        <!-- Cylinder body (taller, narrower) -->
-        <path d="M161 68 L161 180 Q161 191 196 191 Q231 191 231 180 L231 68" fill="url(#dayanBody)"/>
-        <!-- Rope lacing on body -->
-        <path d="M164 78 L164 174 M172 74 L172 181 M181 72 L181 183 M191 71 L191 184 M201 71 L201 184 M211 72 L211 183 M220 74 L220 181 M228 78 L228 174" stroke="rgba(212,168,67,.28)" stroke-width=".9"/>
-        <!-- Horizontal rope rings -->
-        <ellipse cx="196" cy="88" rx="34" ry="8" fill="none" stroke="rgba(212,168,67,.3)" stroke-width="1.1"/>
-        <ellipse cx="196" cy="108" rx="34" ry="8" fill="none" stroke="rgba(212,168,67,.24)" stroke-width="1"/>
-        <ellipse cx="196" cy="128" rx="34" ry="8" fill="none" stroke="rgba(212,168,67,.19)" stroke-width=".9"/>
-        <ellipse cx="196" cy="148" rx="34" ry="8" fill="none" stroke="rgba(212,168,67,.15)" stroke-width=".8"/>
-        <ellipse cx="196" cy="166" rx="34" ry="8" fill="none" stroke="rgba(212,168,67,.12)" stroke-width=".7"/>
-        <!-- Head -->
-        <ellipse cx="196" cy="70" rx="35" ry="11.5" fill="url(#headSkinD)"/>
-        <!-- Head rim -->
-        <ellipse cx="196" cy="70" rx="35" ry="11.5" fill="none" stroke="#3a2800" stroke-width="4.5" stroke-opacity=".45"/>
-        <!-- Kin ring -->
-        <ellipse cx="196" cy="70" rx="27" ry="8.5" fill="none" stroke="#c4a870" stroke-width=".7" stroke-opacity=".55"/>
-        <!-- Syahi (centered on dayan) -->
-        <ellipse cx="196" cy="69" rx="13" ry="4.2" fill="url(#syahiD)"/>
-        <!-- Syahi highlight -->
-        <ellipse cx="193" cy="68" rx="4" ry="1.3" fill="rgba(255,255,255,.06)"/>
-        <!-- Top rim ring -->
-        <ellipse cx="196" cy="70" rx="35" ry="11.5" fill="none" stroke="#d4a843" stroke-width="1.1" stroke-opacity=".65"/>
-        <!-- Knobs -->
-        <circle cx="161" cy="70" r="2" fill="#b8860b" opacity=".75"/>
-        <circle cx="231" cy="70" r="2" fill="#b8860b" opacity=".75"/>
-        <circle cx="196" cy="58.5" r="2" fill="#b8860b" opacity=".75"/>
-        <circle cx="196" cy="81.5" r="2" fill="#b8860b" opacity=".75"/>
-
-        <!-- Subtle gold shimmer at top -->
-        <ellipse cx="140" cy="10" rx="80" ry="18" fill="rgba(212,168,67,.04)"/>
-      </svg>
+      <img src="images/hero-tabla.jpg" alt="Tabla drums" class="card-photo">
       <div class="card-label"></div>
     </div>
     <div class="card-body">
@@ -642,9 +527,9 @@ footer{
   <!-- Vocal -->
   <a href="vocal.html" class="course-card reveal" style="transition-delay:.12s">
     <div class="card-art card-art-vocal">
-      <div class="card-glow"></div>
-      <!-- Harmonium (Indian classical vocal accompaniment) -->
-      <svg viewBox="0 0 280 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <img src="images/hero-harmonium.jpg" alt="Harmonium" class="card-photo">
+      <!-- keep defs below for gradient ids referenced nowhere else; can be stripped later -->
+      <svg viewBox="0 0 0 0" style="display:none">
         <defs>
           <linearGradient id="harmBody" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stop-color="#2a1f0e"/>
@@ -781,8 +666,7 @@ footer{
         <line x1="120" y1="51" x2="178" y2="51" stroke="rgba(201,168,76,.25)" stroke-width=".6"/>
 
         <!-- Ambient notes floating -->
-        <text x="240" y="80" font-family="serif" font-size="18" fill="rgba(201,168,76,.18)" transform="rotate(-15,240,80)">&#x266A;</text>
-        <text x="248" y="108" font-family="serif" font-size="13" fill="rgba(201,168,76,.12)" transform="rotate(10,248,108)">&#x266B;</text>
+        </defs>
       </svg>
       <div class="card-label"></div>
     </div>
