@@ -37,14 +37,15 @@
   --bg-panel:#1d1008;
   --gold:#d4a843;
   --gold-bright:#f0cf7e;
-  --gold-dim:rgba(212,168,67,.3);
+  --gold-dim:rgba(212,168,67,.35);
   --maroon:#6e1f33;
+  --maroon-deep:#511423;
   --cream:#f5e9d3;
-  --cream-dim:rgba(245,233,211,.75);
+  --cream-dim:rgba(245,233,211,.78);
   --font-display:'Cinzel Decorative',serif;
   --font-head:'Cinzel',serif;
   --font-body:'Cormorant Garamond',serif;
-  --maxw:1100px;
+  --maxw:1140px;
   --ease:cubic-bezier(.4,0,.2,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -56,7 +57,7 @@ body{
   color:var(--cream);
   font-family:var(--font-body);
   font-size:1.15rem;
-  line-height:1.7;
+  line-height:1.65;
   min-height:100vh;
   overflow-x:hidden;
 }
@@ -97,21 +98,24 @@ body{
 #pl.hide{opacity:0;pointer-events:none}
 
 /* ===== CURSOR ===== */
-body.can-hover{cursor:none}
-#cur{
-  position:fixed;width:10px;height:10px;
-  border-radius:50%;background:var(--gold);
-  pointer-events:none;z-index:9998;
-  transform:translate(-50%,-50%);
-  transition:transform .12s var(--ease),opacity .2s;
+#cur-dot,#cur-ring{
+  position:fixed;border-radius:50%;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);display:none;
 }
+#cur-dot{width:6px;height:6px;background:var(--gold-bright)}
 #cur-ring{
-  position:fixed;width:36px;height:36px;
-  border-radius:50%;border:1.5px solid rgba(212,168,67,.55);
-  pointer-events:none;z-index:9997;
-  transform:translate(-50%,-50%);
+  width:28px;height:28px;border:1.5px solid rgba(212,168,67,.55);
+  transition:width .18s ease,height .18s ease,border-color .18s ease;
 }
-body:not(.can-hover) #cur,body:not(.can-hover) #cur-ring{display:none}
+body.can-hover #cur-dot,
+body.can-hover #cur-ring{display:block;cursor:none}
+body.can-hover{cursor:none}
+body.can-hover a,
+body.can-hover button,
+body.can-hover [role=button],
+body.can-hover .copyable,
+body.can-hover .frame{cursor:none}
+body.cur-grow #cur-ring{width:42px;height:42px;border-color:var(--gold)}
 
 /* ===== BACKGROUND GLYPH ===== */
 .bg-raga{
@@ -133,17 +137,44 @@ body:not(.can-hover) #cur,body:not(.can-hover) #cur-ring{display:none}
 
 /* ===== LAYOUT ===== */
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 1.5rem}
+section{padding:5rem 0;position:relative}
 
-/* ===== HEADER ===== */
+/* ===== STICKY NAV ===== */
 header{
-  position:relative;z-index:10;
-  padding:2.4rem 1.5rem 0;
-  text-align:center;
+  position:sticky;top:0;z-index:100;
+  background:rgba(18,10,6,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--gold-dim);
 }
+.navbar{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:.8rem 1.25rem;max-width:var(--maxw);margin:0 auto;position:relative;
+}
+.nav-brand{line-height:1.15;flex:1}
+.brand-link{text-decoration:none;color:inherit}
+.brand-name{font-family:var(--font-head);font-weight:700;font-size:1.02rem;letter-spacing:.16em}
+.brand-aff{font-family:var(--font-head);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--cream-dim)}
+.nav-links{display:flex;align-items:center;gap:1.6rem;list-style:none}
+.nav-links a{
+  font-family:var(--font-head);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--cream);transition:color .25s;padding-bottom:2px;
+  border-bottom:1px solid transparent;
+}
+.nav-links a:hover{color:var(--gold-bright)}
+.nav-links a.active{color:var(--gold-bright);border-bottom-color:var(--gold)}
+.nav-controls{display:flex;align-items:center;gap:.65rem}
+.hamburger{display:none;background:none;border:1px solid var(--gold-dim);border-radius:4px;padding:.45rem .6rem;cursor:pointer;color:var(--gold-bright);font-size:1.1rem}
+.snd-btn{
+  background:none;border:1px solid var(--gold-dim);border-radius:50%;
+  width:30px;height:30px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--cream-dim);transition:color .2s,border-color .2s;
+  flex-shrink:0;
+}
+.snd-btn svg{width:14px;height:14px}
+.snd-btn:hover,.snd-btn.on{color:var(--gold-bright);border-color:var(--gold)}
 .brand-badge{
   display:inline-block;
   font-family:var(--font-head);
-  font-size:.72rem;
+  font-size:.78rem;
   letter-spacing:.28em;
   color:var(--gold);
   text-transform:uppercase;
@@ -202,7 +233,13 @@ header{
 .hero{
   position:relative;z-index:1;
   text-align:center;
-  padding:1rem 1.5rem 2rem;
+  padding:3rem 1.5rem 4rem;
+  background:radial-gradient(circle at 50% 30%, rgba(240,207,126,.08), transparent 50%);
+  min-height:60vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 }
 .hero-lead{
   font-family:var(--font-body);
@@ -214,10 +251,46 @@ header{
   line-height:1.8;
 }
 
+/* ===== BUTTONS ===== */
+.btn{
+  display:inline-block;font-family:var(--font-head);letter-spacing:.16em;text-transform:uppercase;
+  font-size:.82rem;font-weight:600;padding:.78rem 1.7rem;border-radius:4px;cursor:pointer;
+  transition:transform .25s,box-shadow .25s,background .25s;border:1px solid transparent;text-align:center;
+}
+.btn-gold{
+  background:linear-gradient(135deg,#b98931,#f0cf7e 50%,#c89b3c);color:#241303;
+  box-shadow:0 0 18px rgba(212,168,67,.25);
+}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 0 28px rgba(212,168,67,.45)}
+.btn-outline{border-color:var(--gold);color:var(--gold-bright);background:transparent;transition:background .25s,border-color .25s}
+.btn-outline:hover{background:rgba(212,168,67,.20);border-color:var(--gold-bright)}
+.hero-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* ===== BADGE ===== */
+.badge{
+  display:inline-block;position:relative;margin:0 auto 2.6rem;
+  font-family:var(--font-head);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold-bright);background:linear-gradient(160deg,var(--maroon),var(--maroon-deep));
+  padding:1.05rem 2.6rem;font-size:.95rem;font-weight:600;
+  border-radius:12px;
+  box-shadow:0 0 0 1px var(--gold),0 0 0 5px var(--maroon-deep),0 0 0 6px var(--gold-dim),0 8px 30px rgba(0,0,0,.5);
+  animation:pulseGold 2.8s ease-in-out infinite;
+}
+.badge::before,.badge::after{
+  content:"\2736";position:absolute;top:50%;transform:translateY(-50%);
+  color:var(--gold);font-size:.8rem;
+}
+.badge::before{left:.9rem}.badge::after{right:.9rem}
+.badge small{display:block;font-size:.75rem;letter-spacing:.32em;color:var(--cream);margin-top:.25rem;font-weight:500}
+@keyframes pulseGold{
+  0%,100%{box-shadow:0 0 0 1px var(--gold),0 0 0 5px var(--maroon-deep),0 0 0 6px var(--gold-dim),0 0 14px rgba(212,168,67,.25)}
+  50%{box-shadow:0 0 0 1px var(--gold-bright),0 0 0 5px var(--maroon-deep),0 0 0 6px var(--gold),0 0 34px rgba(212,168,67,.55)}
+}
+
 /* ===== CARDS ===== */
 .courses{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
   gap:2rem;
   max-width:var(--maxw);
   margin:0 auto;
@@ -245,14 +318,14 @@ header{
 }
 .course-card:hover{
   transform:translateY(-6px);
-  box-shadow:0 16px 48px rgba(0,0,0,.55),0 0 0 1px rgba(212,168,67,.3);
+  box-shadow:0 12px 36px rgba(0,0,0,.5),0 0 0 1px rgba(212,168,67,.3);
   border-color:rgba(212,168,67,.55);
 }
 .course-card:hover::before{opacity:1}
 
 .card-art{
   position:relative;
-  height:240px;
+  aspect-ratio:4/3;
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;
 }
@@ -265,7 +338,7 @@ header{
   opacity:.9;
   transition:opacity .4s,transform .4s var(--ease);
 }
-.course-card:hover .card-photo{opacity:1;transform:scale(1.05)}
+.course-card:hover .card-photo{opacity:1;transform:scale(1.08)}
 
 .card-glow{
   position:absolute;
@@ -291,7 +364,7 @@ header{
 }
 .card-tag{
   font-family:var(--font-head);
-  font-size:.68rem;
+  font-size:.75rem;
   letter-spacing:.25em;
   color:var(--gold);
   text-transform:uppercase;
@@ -325,7 +398,7 @@ header{
   content:'\25C6';
   position:absolute;left:0;
   color:var(--gold);
-  font-size:.55em;
+  font-size:.7em;
   top:.38em;
 }
 .card-cta{
@@ -337,10 +410,10 @@ header{
   color:var(--bg-deep);
   background:linear-gradient(135deg,var(--gold),var(--gold-bright));
   padding:.72rem 1.6rem;
-  border-radius:2px;
-  align-self:flex-start;
+  border-radius:4px;
+  align-self:center;
   transition:opacity .25s,transform .25s;
-  margin-top:auto;
+  margin-top:1.2rem;margin-bottom:.4rem;
 }
 .course-card:hover .card-cta{opacity:.9;transform:translateX(3px)}
 .card-cta svg{width:14px;height:14px;flex-shrink:0}
@@ -384,7 +457,7 @@ header{
   margin-top:.18rem;
 }
 .teacher-cred{
-  font-size:.78rem;
+  font-size:.80rem;
   color:rgba(245,233,211,.45);
   margin-top:.4rem;
   line-height:1.5;
@@ -431,24 +504,72 @@ header{
 
 /* ===== FOOTER ===== */
 footer{
-  position:relative;z-index:1;
-  text-align:center;
-  padding:1.8rem 1.5rem 2.4rem;
-  font-size:.85rem;
-  color:rgba(245,233,211,.35);
-  font-family:var(--font-head);
-  letter-spacing:.12em;
+  border-top:1px solid var(--gold-dim);padding:2.6rem 1.5rem;text-align:center;
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,.4));
+}
+footer .f-name{font-family:var(--font-head);letter-spacing:.22em;font-size:1rem;margin-bottom:.3rem}
+footer .f-aff{font-size:.95rem;font-style:italic;color:var(--cream-dim);margin-bottom:1.2rem}
+footer .f-links{display:flex;gap:1.6rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.2rem;align-items:center}
+footer .f-links a{font-family:var(--font-head);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase}
+footer .f-copy{font-size:.95rem;color:var(--cream-dim)}
+
+/* FAB */
+.fab{
+  position:fixed;right:1.1rem;bottom:1.1rem;z-index:90;width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,#b98931,#f0cf7e 55%,#c89b3c);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 22px rgba(0,0,0,.55),0 0 16px rgba(212,168,67,.35);color:#241303;
+  transition:transform .25s;
+}
+.fab:hover{transform:scale(1.08)}
+.fab svg{width:28px;height:28px}
+
+/* --- SCROLL PROGRESS BAR --- */
+#scroll-prog{
+  position:fixed;top:0;left:0;z-index:200;height:2px;width:0%;pointer-events:none;
+  background:linear-gradient(90deg,var(--gold),var(--gold-bright),var(--gold));
+  transition:width .1s linear;
 }
 
+/* --- BACK TO TOP --- */
+#btt{
+  position:fixed;left:1.1rem;bottom:1.1rem;z-index:90;
+  width:46px;height:46px;border-radius:50%;
+  border:1.5px solid var(--gold-dim);background:rgba(18,10,6,.88);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  color:var(--gold-bright);
+  opacity:0;transform:translateY(10px);
+  transition:opacity .4s,transform .4s,border-color .2s;
+  backdrop-filter:blur(6px);
+}
+#btt.vis{opacity:1;transform:none}
+#btt:hover{border-color:var(--gold)}
+#btt svg{width:17px;height:17px}
+
 /* ===== SCROLL REVEAL ===== */
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .75s ease,transform .75s ease}
 .reveal.visible{opacity:1;transform:none}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:600px){
   .site-title{font-size:1.5rem}
-  .card-art{height:170px}
   .card-title{font-size:1.3rem}
+}
+@media(max-width:760px){
+  .nav-links{display:none}
+  .nav-links.open{display:flex;flex-direction:column;background:rgba(18,10,6,.98);position:absolute;top:100%;left:0;right:0;border-bottom:1px solid var(--gold-dim);padding:.5rem 0;gap:0}
+  .nav-links.open li{width:100%;text-align:center;border-top:1px solid rgba(212,168,67,.15)}
+  .nav-links.open a{display:block;padding:1rem}
+  .hamburger{display:block}
+}
+@media(max-width:900px){
+  .courses{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .contact-list{flex-direction:column;gap:.8rem;align-items:center}
+  .hero-lead{max-width:min(560px,90%)}
+}
+@media(max-width:480px){
+  .teacher-card{flex-direction:column;text-align:center}
 }
 </style>
 </head>
@@ -464,9 +585,12 @@ footer{
   <div class="pl-bar"></div>
 </div>
 
-<!-- Cursor -->
-<div id="cur" aria-hidden="true"></div>
+<!-- Custom cursor -->
+<div id="cur-dot" aria-hidden="true"></div>
 <div id="cur-ring" aria-hidden="true"></div>
+
+<!-- Scroll progress -->
+<div id="scroll-prog" aria-hidden="true"></div>
 
 <!-- Background glyphs -->
 <div class="bg-raga" aria-hidden="true">
@@ -478,12 +602,31 @@ footer{
 <!-- Skip link -->
 <a href="#courses" style="position:absolute;left:-999px;top:auto;overflow:hidden;">Skip to courses</a>
 
-<!-- Header -->
+<!-- Sticky Nav -->
 <header>
-  <div class="brand-badge">Est. Belgharia, Kolkata</div>
-  <h1 class="site-title">Ragranjani Music Academy</h1>
-  <p class="site-subtitle">Online &amp; Offline Music Classes</p>
-  <p class="affil">Affiliated with Sura Bharati Sangeet Kala Kendra</p>
+  <nav class="navbar">
+    <div class="nav-brand">
+      <a href="index.html" class="brand-link" aria-label="Home">
+        <div class="brand-name gold-grad">RAGRANJANI MUSIC ACADEMY</div>
+        <div class="brand-aff">Affiliated Sura Bharati Sangeet Kala Kendra</div>
+      </a>
+    </div>
+    <div class="nav-controls">
+      <button class="snd-btn" id="snd-btn" aria-pressed="false" aria-label="Toggle ambient drone sound" title="Ambient sound">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <path d="M11 5L6 9H2v6h4l5 4V5Z"/>
+          <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+        </svg>
+      </button>
+      <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+      <li><a href="tabla.html">Tabla</a></li>
+      <li><a href="vocal.html">Vocal</a></li>
+      <li><a href="admission.html">Admission</a></li>
+    </ul>
+  </nav>
 </header>
 
 <!-- Ornament -->
@@ -493,9 +636,18 @@ footer{
 
 <!-- Hero -->
 <section class="hero">
+  <div class="brand-badge">Est. Belgharia, Kolkata</div>
+  <h1 class="site-title">Ragranjani Music Academy</h1>
+  <p class="site-subtitle">Online &amp; Offline Music Classes</p>
+  <p class="affil">Affiliated with Sura Bharati Sangeet Kala Kendra</p>
+  <div class="badge" role="status">Admission Open<small>Limited Seats</small></div>
   <p class="hero-lead reveal">
     Where rhythm meets melody. Discover the art of Indian classical music through expert tutelage &mdash; in person or online.
   </p>
+  <div class="hero-ctas" style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center">
+    <a class="btn btn-gold" href="admission.html">Apply for Admission</a>
+    <a class="btn btn-outline" href="#courses">Our Courses</a>
+  </div>
 </section>
 
 <!-- Course Cards -->
@@ -746,17 +898,51 @@ footer{
     </li>
   </ul>
   <div style="margin-top:1.8rem">
-    <a href="admission.html" style="font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--bg-deep);background:linear-gradient(135deg,var(--gold),var(--gold-bright));padding:.78rem 2rem;border-radius:2px;text-decoration:none;display:inline-block;transition:opacity .2s">Apply for Admission</a>
+    <a href="admission.html" style="font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--bg-deep);background:linear-gradient(135deg,var(--gold),var(--gold-bright));padding:.78rem 2rem;border-radius:4px;text-decoration:none;display:inline-block;transition:opacity .2s">Apply for Admission</a>
   </div>
 </div>
 
+<!-- Back to top -->
+<button id="btt" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+    <path d="M18 15l-6-6-6 6"/>
+  </svg>
+</button>
+
 <!-- Footer -->
 <footer>
-  <p>&copy; <span id="yr"></span> Ragranjani Music Academy &nbsp;&middot;&nbsp; All rights reserved</p>
+  <div class="f-name gold-grad">RAGRANJANI MUSIC ACADEMY</div>
+  <div class="f-aff">Affiliated Sura Bharati Sangeet Kala Kendra &middot; Belgharia, Nimta, Kolkata &ndash; 700049</div>
+  <div class="f-links">
+    <a href="tabla.html">Tabla</a>
+    <a href="vocal.html">Vocal</a>
+    <a href="admission.html">Admission</a>
+    <a href="https://www.facebook.com/share/18kSKYZsUg/" target="_blank" rel="noopener">Facebook</a>
+  </div>
+  <div class="f-copy">&copy; <span id="yr"></span> <span id="yr2"></span> Ragranjani Music Academy</div>
 </footer>
+
+<!-- Floating WhatsApp -->
+<a class="fab" href="https://wa.me/917980464278" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm4.5 14.1c-.2.6-1.2 1.1-1.7 1.2-.8.1-1.5.1-3.2-.7a11.3 11.3 0 0 1-4.4-4.2c-.8-1.4-.7-2.7.2-3.6.2-.2.5-.3.7-.3h.5c.2 0 .4-.1.6.4l.8 1.9c.1.2.1.3 0 .5l-.4.5c-.2.2-.5.3-.2.7a6.7 6.7 0 0 0 3.3 2.9c.2.1.4 0 .5-.1.1-.2.6-.8.8-1 .2-.2.4-.2.6-.1.2.1 1.5.7 1.7.8.1 0 .3.1.3.2.1.1.1.6-.1 1.2Z"/></svg>
+</a>
 
 <script>
 document.getElementById("yr").textContent = new Date().getFullYear();
+document.getElementById("yr2").textContent = new Date().getFullYear();
+
+// BTT
+(function(){
+  var btn=document.getElementById("btt");
+  if(!btn) return;
+  var hero=document.querySelector(".hero");
+  if(!hero) return;
+  var io=new IntersectionObserver(function(entries){
+    btn.classList.toggle("vis",!entries[0].isIntersecting);
+  },{threshold:0});
+  io.observe(hero);
+  btn.addEventListener("click",function(){ window.scrollTo({top:0,behavior:"smooth"}); });
+})();
 
 (function(){
   var pl = document.getElementById("pl");
@@ -765,10 +951,16 @@ document.getElementById("yr").textContent = new Date().getFullYear();
   setTimeout(function(){ sessionStorage.setItem("rma_home_pl","1"); done(); }, 1400);
 })();
 
+/* Hamburger toggle */
+document.querySelector('.hamburger')?.addEventListener('click', function(){
+  document.querySelector('.nav-links')?.classList.toggle('open');
+  this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+});
+
 function initCursor(){
   if(!window.matchMedia("(hover:hover) and (pointer:fine)").matches) return;
   document.body.classList.add("can-hover");
-  var dot=document.getElementById("cur"), ring=document.getElementById("cur-ring");
+  var dot=document.getElementById("cur-dot"), ring=document.getElementById("cur-ring");
   var mx=window.innerWidth/2, my=window.innerHeight/2, rx=mx, ry=my;
   document.addEventListener("mousemove",function(e){ mx=e.clientX; my=e.clientY; });
   function lerp(a,b,t){ return a+(b-a)*t; }
@@ -778,7 +970,22 @@ function initCursor(){
     ring.style.left=rx+"px"; ring.style.top=ry+"px";
     requestAnimationFrame(frame);
   })();
+  const hoverEls = "a,button,[role=button],.copyable,.frame,[data-tilt]";
+  document.querySelectorAll(hoverEls).forEach(function(el){
+    el.addEventListener("mouseenter",function(){ document.body.classList.add("cur-grow"); });
+    el.addEventListener("mouseleave",function(){ document.body.classList.remove("cur-grow"); });
+  });
 }
+
+/* Scroll progress */
+(function(){
+  var bar=document.getElementById("scroll-prog");
+  if(!bar) return;
+  window.addEventListener("scroll",function(){
+    var max=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(max>0?(window.scrollY/max*100):0)+"%";
+  },{passive:true});
+})();
 
 function initReveal(){
   var els=document.querySelectorAll(".reveal");
