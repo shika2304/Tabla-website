@@ -524,7 +524,7 @@ main{padding:2.4rem 1.5rem 4rem}
 
     <!-- Notice -->
     <div class="form-notice">
-      <strong>How it works:</strong> Clicking &ldquo;Submit Application&rdquo; will open your email app with a pre-filled admission form addressed to the academy. Simply press <strong>Send</strong> to complete your application. You may also print this form and submit it in person.
+      <strong>How it works:</strong> Fill in all required fields and click &ldquo;Submit Application&rdquo;. Your application will be sent directly to the academy &mdash; no email app needed. You will see a confirmation message on screen. You may also print this form and submit it in person.
     </div>
 
     <!-- Actions -->
@@ -546,6 +546,13 @@ main{padding:2.4rem 1.5rem 4rem}
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
+// ─── Web3Forms key ───────────────────────────────────────────────────────────
+// 1. Go to https://web3forms.com
+// 2. Enter ragranjanimusicacademy@gmail.com and click "Get Access Key"
+// 3. Check that inbox for the key email, then paste the key below
+var WEB3FORMS_KEY = "YOUR_WEB3FORMS_KEY";
+// ─────────────────────────────────────────────────────────────────────────────
+
 // Set today's date for admission date
 document.getElementById("admDate").value = new Date().toISOString().split("T")[0];
 
@@ -572,12 +579,12 @@ document.querySelectorAll('input[name="course"]').forEach(function(radio){
 });
 
 // Toast helper
-function showToast(msg, type){
+function showToast(msg, type, duration){
   var t = document.getElementById("toast");
   t.textContent = msg;
   t.className = "show " + (type||"");
   clearTimeout(t._tid);
-  t._tid = setTimeout(function(){ t.className = ""; }, 3800);
+  t._tid = setTimeout(function(){ t.className = ""; }, duration || 4000);
 }
 
 // Validation
@@ -592,7 +599,6 @@ function validate(){
       el.classList.remove("err");
     }
   });
-  // PIN format
   var pin = document.getElementById("pin");
   if(pin.value && !/^\d{6}$/.test(pin.value.trim())){
     pin.classList.add("err"); ok = false;
@@ -607,6 +613,8 @@ function fmtDate(val){
   return d.toLocaleDateString("en-IN",{day:"2-digit",month:"long",year:"numeric"});
 }
 
+var SEND_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>';
+
 // Submit
 document.getElementById("admForm").addEventListener("submit", function(e){
   e.preventDefault();
@@ -614,6 +622,10 @@ document.getElementById("admForm").addEventListener("submit", function(e){
     showToast("Please fill in all required fields.", "error");
     return;
   }
+
+  var btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  btn.innerHTML = SEND_SVG + " Sending…";
 
   var course   = document.querySelector('input[name="course"]:checked').value;
   var name     = document.getElementById("studentName").value.trim().toUpperCase();
@@ -629,9 +641,9 @@ document.getElementById("admForm").addEventListener("submit", function(e){
   var religion = document.getElementById("religion").value.trim();
   var admDate  = fmtDate(document.getElementById("admDate").value);
 
-  var subject = "Admission Application — " + name + " (" + course + ")";
+  var emailSubject = "Admission Application — " + name + " (" + course + ")";
 
-  var body = [
+  var message = [
     "RAGRANJANI MUSIC ACADEMY — ADMISSION FORM",
     "Affiliated to Sura Bharati Sangeet Kala Kendra",
     "7, S.B Roy Choudhury Road, Nimta, Kolkata - 700049",
@@ -640,8 +652,6 @@ document.getElementById("admForm").addEventListener("submit", function(e){
     "COURSE APPLIED FOR: " + course,
     "═══════════════════════════════════════════",
     "",
-    "STUDENT DETAILS",
-    "───────────────────────────────────────────",
     "Name of Student     : " + name,
     "Guardian's Name     : " + guardian,
     "Date of Birth       : " + dob,
@@ -650,39 +660,63 @@ document.getElementById("admForm").addEventListener("submit", function(e){
     "Nationality         : " + (natl || "Not specified"),
     "Religion            : " + (religion || "Not specified"),
     "",
-    "CONTACT DETAILS",
-    "───────────────────────────────────────────",
     "Mobile Number       : " + mobile,
     "Email               : " + (email || "Not provided"),
     "Residential Address : " + address,
     "PIN Code            : " + pin,
     "",
-    "ADMISSION",
-    "───────────────────────────────────────────",
     "Subject             : " + course,
     "Date of Admission   : " + admDate,
     "",
     "═══════════════════════════════════════════",
-    "This application was submitted via the Ragranjani Music Academy website.",
-    "Please contact the student at the number above to confirm their admission."
+    "Submitted via the Ragranjani Music Academy website.",
+    "Please contact the student at the mobile number above to confirm admission."
   ].join("\n");
 
-  var to = "ragranjanimusicacademy@gmail.com,nirmalya.sen358@gmail.com";
-  var mailto = "mailto:" + to
-    + "?subject=" + encodeURIComponent(subject)
-    + "&body="    + encodeURIComponent(body);
+  var fd = new FormData();
+  fd.append("access_key",   WEB3FORMS_KEY);
+  fd.append("subject",      emailSubject);
+  fd.append("from_name",    name + " via Ragranjani Website");
+  fd.append("cc",           "nirmalya.sen358@gmail.com");
+  fd.append("message",      message);
+  fd.append("Course",       course);
+  fd.append("Student Name", name);
+  fd.append("Guardian",     guardian);
+  fd.append("Date of Birth",dob);
+  fd.append("Gender",       gender);
+  fd.append("Education",    education);
+  fd.append("Mobile",       mobile);
+  fd.append("Address",      address);
+  fd.append("PIN",          pin);
+  if(email)    fd.append("Email",       email);
+  if(natl)     fd.append("Nationality", natl);
+  if(religion) fd.append("Religion",    religion);
+  fd.append("Date of Admission", admDate);
 
-  // mailto URLs have a length limit in some clients; warn if very long
-  if(mailto.length > 2000){
-    showToast("Opening email client…", "success");
-  }
-
-  window.location.href = mailto;
-
-  showToast("Email client opening — please press Send to submit.", "success");
+  fetch("https://api.web3forms.com/submit", { method:"POST", body:fd })
+    .then(function(res){ return res.json(); })
+    .then(function(data){
+      btn.disabled = false;
+      btn.innerHTML = SEND_SVG + " Submit Application";
+      if(data.success){
+        showToast("✓ Application submitted! We will contact you soon.", "success", 6000);
+        document.getElementById("admForm").reset();
+        document.querySelectorAll(".course-opt").forEach(function(el){ el.classList.remove("selected"); });
+        document.getElementById("opt-tabla").classList.add("selected");
+        document.getElementById("subject").value = "Tabla";
+        document.getElementById("admDate").value = new Date().toISOString().split("T")[0];
+      } else {
+        showToast("Submission failed. Please call us or try again.", "error");
+      }
+    })
+    .catch(function(){
+      btn.disabled = false;
+      btn.innerHTML = SEND_SVG + " Submit Application";
+      showToast("Network error. Check your connection and try again.", "error");
+    });
 });
 
-// Remove error on input
+// Remove error highlight on input
 document.querySelectorAll(".field input,.field select,.field textarea").forEach(function(el){
   el.addEventListener("input", function(){ this.classList.remove("err"); });
 });
