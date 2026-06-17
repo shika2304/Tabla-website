@@ -149,10 +149,11 @@ header{
   display:flex;align-items:center;justify-content:space-between;gap:1rem;
   padding:.8rem 1.25rem;max-width:var(--maxw);margin:0 auto;position:relative;
 }
-.nav-brand{line-height:1.15;flex:1}
+.nav-brand{display:flex;align-items:center;gap:.7rem;flex:1;line-height:1.15}
 .brand-link{text-decoration:none;color:inherit}
 .brand-name{font-family:var(--font-head);font-weight:700;font-size:1.02rem;letter-spacing:.16em}
 .brand-aff{font-family:var(--font-head);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--cream-dim)}
+.brand-logo{width:42px;height:42px;object-fit:contain;flex-shrink:0;border-radius:50%;background:rgba(255,255,255,.06)}
 .nav-links{display:flex;align-items:center;gap:1.6rem;list-style:none}
 .nav-links a{
   font-family:var(--font-head);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;
@@ -606,6 +607,7 @@ footer .f-copy{font-size:.95rem;color:var(--cream-dim)}
 <header>
   <nav class="navbar">
     <div class="nav-brand">
+      <img src="images/logo.png" alt="Ragranjani Music Academy Logo" class="brand-logo">
       <a href="index.html" class="brand-link" aria-label="Home">
         <div class="brand-name gold-grad">RAGRANJANI MUSIC ACADEMY</div>
         <div class="brand-aff">Affiliated Sura Bharati Sangeet Kala Kendra</div>

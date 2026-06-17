@@ -118,7 +118,8 @@ header{
   border-bottom:1px solid var(--gold-dim);
 }
 .nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.8rem 1.25rem;max-width:var(--maxw);margin:0 auto}
-.brand{line-height:1.15;flex:1}
+.brand{display:flex;align-items:center;gap:.7rem;flex:1;line-height:1.15}
+.brand-logo{width:42px;height:42px;object-fit:contain;flex-shrink:0;border-radius:50%;background:rgba(255,255,255,.06)}
 .brand-name{font-family:var(--font-head);font-weight:700;font-size:1.02rem;letter-spacing:.16em}
 .brand-aff{font-family:var(--font-head);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--cream-dim)}
 .nav-links{display:flex;align-items:center;gap:1.6rem;list-style:none}
@@ -702,8 +703,11 @@ body.cur-grow #cur-ring{width:42px;height:42px;border-color:var(--gold)}
 <header>
   <nav class="nav" aria-label="Main navigation">
     <div class="brand">
-      <div class="brand-name gold-grad">RAGRANJANI MUSIC ACADEMY</div>
-      <div class="brand-aff">Affiliated Sura Bharati Sangeet Kala Kendra</div>
+      <img src="images/logo.png" alt="Ragranjani Music Academy Logo" class="brand-logo">
+      <div>
+        <div class="brand-name gold-grad">RAGRANJANI MUSIC ACADEMY</div>
+        <div class="brand-aff">Affiliated Sura Bharati Sangeet Kala Kendra</div>
+      </div>
     </div>
     <div class="nav-controls">
       <a href="index.html" class="back-home" aria-label="Back to home">
@@ -776,7 +780,7 @@ body.cur-grow #cur-ring{width:42px;height:42px;border-color:var(--gold)}
         <span class="corner c-br"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 25V8C1 4 4 1 8 1h17"/><circle cx="6" cy="6" r="1.6" fill="currentColor" stroke="none"/></svg></span>
         <span class="corner c-bl"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 25V8C1 4 4 1 8 1h17"/><circle cx="6" cy="6" r="1.6" fill="currentColor" stroke="none"/></svg></span>
         <div class="portrait-inner">
-          <img src="images/gallery-tabla-pamela.jpg" alt="Pamela Banerjee — Tabla Instructor">
+          <img src="images/pamela-profile.jpg" alt="Pamela Banerjee — Tabla Instructor">
         </div>
       </div>
       <div class="about-text reveal">
@@ -786,8 +790,9 @@ body.cur-grow #cur-ring{width:42px;height:42px;border-color:var(--gold)}
         <p>A disciple of <strong>Pt. Aninda Chatterjee</strong>, <strong>Pt. Dilip Mukherjee</strong>, and <strong>Pt. Asish Sengupta</strong>, her teaching carries the full weight of the guru&ndash;shishya tradition — precise, patient, and deeply rooted in taal.</p>
         <div class="about-creds">
           <p>Pamela Banerjee is a distinguished Tabla artist and educator. She was awarded the National Scholarship by the Ministry of Culture, Government of India, in recognition of her excellence in the field of Indian classical music. She also graduated &amp; Masters as a First Class First Gold Medalist from Rabindra Bharati University.</p>
+          <p>For many years, she has been actively engaged in teaching Tabla and nurturing young talents. She has served as a Tabla teacher at Agrasain Balika Siksha Sadan, Howrah, Kolkata, where she has contributed significantly to the promotion of Indian percussion music and music education.</p>
           <p>Throughout her musical journey, she has participated in several prestigious competitions, including the Inter Division Railways Cultural Competition, Sarba Bharatiya Sangeet O Sanskriti Parishad Competition, Dover Lane Music Competition, and Murari Smriti Competition. Her outstanding talent and dedication have been recognized through numerous achievements, securing first and second positions in various Tabla Solo competitions.</p>
-          <p>Now, Pamela Banerjee is committed to sharing her knowledge and passion for Tabla with a wider audience. She is actively working to promote Tabla education and inspire the next generation of students, helping to preserve and spread this rich musical tradition.</p>
+          <p>Now, Pamela Banerjee is committed to sharing her knowledge and passion for Tabla with a wider audience. Through her performances and teaching, she has consistently worked to promote the rich tradition of Indian percussion music. She is also actively working to promote Tabla education and inspire the next generation of students, helping to preserve and spread this rich musical tradition.</p>
         </div>
         <div class="about-aff">Ragranjani Music Academy is affiliated with Sura Bharati Sangeet Kala Kendra.</div>
       </div>
