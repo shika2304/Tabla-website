@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 :root{
   --bg-deep:#0d0805;
@@ -524,14 +525,14 @@ main{padding:2.4rem 1.5rem 4rem}
 
     <!-- Notice -->
     <div class="form-notice">
-      <strong>How it works:</strong> Fill in all required fields and click &ldquo;Submit via WhatsApp&rdquo;. WhatsApp will open with your application already filled in &mdash; just press <strong>Send</strong>. Works on phone and computer. You may also print this form and submit it in person.
+      <strong>How it works:</strong> Fill in all required fields and click &ldquo;Submit Application&rdquo;. Your application will be emailed to the academy <em>and</em> WhatsApp will open with the same details pre-filled &mdash; just press <strong>Send</strong> there too. You may also print this form and submit it in person.
     </div>
 
     <!-- Actions -->
     <div class="form-actions">
       <button type="submit" class="btn-submit" id="submitBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-        Submit via WhatsApp
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        Submit Application
       </button>
       <button type="button" class="btn-print" onclick="window.print()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -546,11 +547,30 @@ main{padding:2.4rem 1.5rem 4rem}
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
+// ─── EmailJS configuration ────────────────────────────────────────────────────
+// SETUP (takes ~5 minutes, free, no access to the academy email needed):
+//
+//  1. Go to https://emailjs.com → Sign Up with YOUR own email
+//  2. Dashboard → Email Services → Add New Service → choose Gmail
+//     → Connect your Gmail account → copy the Service ID → paste below
+//  3. Dashboard → Email Templates → Create New Template
+//     Set:  To email   = ragranjanimusicacademy@gmail.com
+//           CC         = nirmalya.sen358@gmail.com
+//           Subject    = {{subject}}
+//           Body       = {{message}}
+//     Save → copy the Template ID → paste below
+//  4. Dashboard → Account → General → Public Key → paste below
+//
+var EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";
+var EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+var EMAILJS_PUBLIC_KEY  = "YOUR_PUBLIC_KEY";
+// ─────────────────────────────────────────────────────────────────────────────
+
 var WA_NUMBER = "917980464278";
 
-var WA_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>';
+emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 
-// Set today's date for admission date
+// Set today's date
 document.getElementById("admDate").value = new Date().toISOString().split("T")[0];
 
 // Photo preview
@@ -597,19 +617,23 @@ function validate(){
   return ok;
 }
 
-// Format date for display
 function fmtDate(val){
   if(!val) return "Not specified";
   return new Date(val + "T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"long",year:"numeric"});
 }
 
-// Submit — opens WhatsApp with full application pre-filled
+var SUBMIT_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>';
+
 document.getElementById("admForm").addEventListener("submit", function(e){
   e.preventDefault();
   if(!validate()){
     showToast("Please fill in all required fields.", "error");
     return;
   }
+
+  var btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  btn.innerHTML = SUBMIT_SVG + " Sending…";
 
   var course    = document.querySelector('input[name="course"]:checked').value;
   var name      = document.getElementById("studentName").value.trim().toUpperCase();
@@ -625,36 +649,77 @@ document.getElementById("admForm").addEventListener("submit", function(e){
   var religion  = document.getElementById("religion").value.trim();
   var admDate   = fmtDate(document.getElementById("admDate").value);
 
-  var msg = [
-    "🎵 *ADMISSION APPLICATION*",
-    "*Ragranjani Music Academy*",
+  var emailSubject = "Admission Application — " + name + " (" + course + ")";
+
+  var emailBody = [
+    "RAGRANJANI MUSIC ACADEMY — ADMISSION FORM",
     "Affiliated to Sura Bharati Sangeet Kala Kendra",
+    "7, S.B Roy Choudhury Road, Nimta, Kolkata - 700049",
     "",
-    "*Course Applied For:* " + course,
+    "COURSE APPLIED FOR: " + course,
     "",
-    "*STUDENT DETAILS*",
-    "Name: " + name,
-    "Guardian: " + guardian,
-    "Date of Birth: " + dob,
-    "Gender: " + gender,
-    "Education: " + education,
-    "Nationality: " + (natl || "Indian"),
-    "Religion: " + (religion || "—"),
+    "STUDENT DETAILS",
+    "Name of Student     : " + name,
+    "Guardian's Name     : " + guardian,
+    "Date of Birth       : " + dob,
+    "Gender              : " + gender,
+    "Educational Qual.   : " + education,
+    "Nationality         : " + (natl || "Indian"),
+    "Religion            : " + (religion || "Not specified"),
     "",
-    "*CONTACT DETAILS*",
-    "Mobile: " + mobile,
-    "Email: " + (email || "Not provided"),
-    "Address: " + address,
-    "PIN: " + pin,
+    "CONTACT DETAILS",
+    "Mobile Number       : " + mobile,
+    "Email               : " + (email || "Not provided"),
+    "Residential Address : " + address,
+    "PIN Code            : " + pin,
     "",
-    "Date of Admission: " + admDate,
+    "Subject             : " + course,
+    "Date of Admission   : " + admDate,
     "",
-    "_Submitted via the academy website. Please confirm admission._"
+    "Submitted via the Ragranjani Music Academy website.",
+    "Please contact the student at the mobile number above to confirm admission."
   ].join("\n");
 
-  var url = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg);
-  window.open(url, "_blank");
-  showToast("WhatsApp opened — please press Send to submit.", "success", 5000);
+  var waMsg = [
+    "🎵 *ADMISSION APPLICATION*",
+    "*Ragranjani Music Academy*",
+    "",
+    "*Course:* " + course,
+    "*Name:* " + name,
+    "*Guardian:* " + guardian,
+    "*DOB:* " + dob,
+    "*Gender:* " + gender,
+    "*Education:* " + education,
+    "*Nationality:* " + (natl || "Indian"),
+    "*Religion:* " + (religion || "—"),
+    "",
+    "*Mobile:* " + mobile,
+    "*Email:* " + (email || "Not provided"),
+    "*Address:* " + address,
+    "*PIN:* " + pin,
+    "*Date of Admission:* " + admDate,
+    "",
+    "_Submitted via the academy website._"
+  ].join("\n");
+
+  // Send email via EmailJS, then open WhatsApp regardless
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+    subject: emailSubject,
+    message: emailBody
+  })
+  .then(function(){
+    btn.disabled = false;
+    btn.innerHTML = SUBMIT_SVG + " Submit Application";
+    showToast("✓ Email sent! Opening WhatsApp now…", "success", 6000);
+    window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(waMsg), "_blank");
+  })
+  .catch(function(){
+    btn.disabled = false;
+    btn.innerHTML = SUBMIT_SVG + " Submit Application";
+    // Email failed — still open WhatsApp so the application is not lost
+    showToast("Email failed — opening WhatsApp as backup. Press Send there.", "error", 6000);
+    window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(waMsg), "_blank");
+  });
 });
 
 // Remove error highlight on input
