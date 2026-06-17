@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 :root{
   --bg-deep:#0d0805;
@@ -546,16 +547,26 @@ main{padding:2.4rem 1.5rem 4rem}
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
-// ─── Web3Forms configuration ──────────────────────────────────────────────────
-// FREE — unlimited submissions, no monthly limit, no credit card needed.
-// SETUP (2 minutes):
-//  1. Go to https://web3forms.com
-//  2. Enter YOUR OWN email (not the academy's) → click "Get Access Key"
-//  3. Check your inbox → copy the access key → paste it below
-//  (Web3Forms will send each submission to your email AND CC the academy)
+// ─── EmailJS configuration (FREE — 200 emails/month, no credit card) ─────────
+// SETUP (5 minutes, one time):
+//  1. Go to https://emailjs.com → Sign Up with YOUR own email (free)
+//  2. Dashboard → Email Services → Add New Service → Gmail → connect your Gmail
+//     → copy the Service ID → paste below as EMAILJS_SERVICE_ID
+//  3. Dashboard → Email Templates → Create New Template
+//     Fill in exactly:
+//       To email  →  ragranjanimusicacademy@gmail.com
+//       CC        →  nirmalya.sen358@gmail.com
+//       Subject   →  {{subject}}
+//       Body      →  {{message}}
+//     Save → copy Template ID → paste below as EMAILJS_TEMPLATE_ID
+//  4. Dashboard → Account → General → Public Key → paste below as EMAILJS_PUBLIC_KEY
 //
-var W3F_KEY = "b16b1f11-9389-4735-84b6-23211e927b97";
+var EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";
+var EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+var EMAILJS_PUBLIC_KEY  = "YOUR_PUBLIC_KEY";
 // ─────────────────────────────────────────────────────────────────────────────
+
+emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 
 var WA_NUMBER = "917980464278";
 
@@ -691,30 +702,21 @@ document.getElementById("admForm").addEventListener("submit", function(e){
     "_Submitted via the academy website._"
   ].join("\n");
 
-  // Send email via Web3Forms, then open WhatsApp regardless
-  var fd = new FormData();
-  fd.append("access_key", W3F_KEY);
-  fd.append("subject",    emailSubject);
-  fd.append("from_name",  name + " via Ragranjani Website");
-  fd.append("cc",         "ragranjanimusicacademy@gmail.com,nirmalya.sen358@gmail.com");
-  fd.append("message",    emailBody);
-
-  fetch("https://api.web3forms.com/submit", { method: "POST", body: fd })
-    .then(function(res){ return res.json(); })
-    .then(function(data){
-      btn.disabled = false;
-      btn.innerHTML = SUBMIT_SVG + " Submit Application";
-      if(data.success){
-        showToast("✓ Email sent! Opening WhatsApp now…", "success", 6000);
-      } else {
-        showToast("Email failed — opening WhatsApp as backup. Press Send there.", "error", 6000);
-      }
-      window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(waMsg), "_blank");
-    })
-    .catch(function(){
-      btn.disabled = false;
-      btn.innerHTML = SUBMIT_SVG + " Submit Application";
-      showToast("Network error — opening WhatsApp as backup. Press Send there.", "error", 6000);
+  // Send email via EmailJS, then open WhatsApp regardless
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+    subject: emailSubject,
+    message: emailBody
+  })
+  .then(function(){
+    btn.disabled = false;
+    btn.innerHTML = SUBMIT_SVG + " Submit Application";
+    showToast("✓ Email sent! Opening WhatsApp now…", "success", 6000);
+    window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(waMsg), "_blank");
+  })
+  .catch(function(){
+    btn.disabled = false;
+    btn.innerHTML = SUBMIT_SVG + " Submit Application";
+    showToast("Email failed — opening WhatsApp as backup. Press Send there.", "error", 6000);
       window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(waMsg), "_blank");
     });
 });
