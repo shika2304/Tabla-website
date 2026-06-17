@@ -524,14 +524,14 @@ main{padding:2.4rem 1.5rem 4rem}
 
     <!-- Notice -->
     <div class="form-notice">
-      <strong>How it works:</strong> Fill in all required fields and click &ldquo;Submit Application&rdquo;. Your application will be sent directly to the academy &mdash; no email app needed. You will see a confirmation message on screen. You may also print this form and submit it in person.
+      <strong>How it works:</strong> Fill in all required fields and click &ldquo;Submit via WhatsApp&rdquo;. WhatsApp will open with your application already filled in &mdash; just press <strong>Send</strong>. Works on phone and computer. You may also print this form and submit it in person.
     </div>
 
     <!-- Actions -->
     <div class="form-actions">
       <button type="submit" class="btn-submit" id="submitBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-        Submit Application
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Submit via WhatsApp
       </button>
       <button type="button" class="btn-print" onclick="window.print()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -546,12 +546,9 @@ main{padding:2.4rem 1.5rem 4rem}
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
-// ─── Web3Forms key ───────────────────────────────────────────────────────────
-// 1. Go to https://web3forms.com
-// 2. Enter ragranjanimusicacademy@gmail.com and click "Get Access Key"
-// 3. Check that inbox for the key email, then paste the key below
-var WEB3FORMS_KEY = "YOUR_WEB3FORMS_KEY";
-// ─────────────────────────────────────────────────────────────────────────────
+var WA_NUMBER = "917980464278";
+
+var WA_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>';
 
 // Set today's date for admission date
 document.getElementById("admDate").value = new Date().toISOString().split("T")[0];
@@ -590,32 +587,23 @@ function showToast(msg, type, duration){
 // Validation
 function validate(){
   var ok = true;
-  var required = ["studentName","guardian","dob","gender","education","address","pin","mobile"];
-  required.forEach(function(id){
+  ["studentName","guardian","dob","gender","education","address","pin","mobile"].forEach(function(id){
     var el = document.getElementById(id);
-    if(!el.value.trim()){
-      el.classList.add("err"); ok = false;
-    } else {
-      el.classList.remove("err");
-    }
+    if(!el.value.trim()){ el.classList.add("err"); ok = false; }
+    else { el.classList.remove("err"); }
   });
   var pin = document.getElementById("pin");
-  if(pin.value && !/^\d{6}$/.test(pin.value.trim())){
-    pin.classList.add("err"); ok = false;
-  }
+  if(pin.value && !/^\d{6}$/.test(pin.value.trim())){ pin.classList.add("err"); ok = false; }
   return ok;
 }
 
 // Format date for display
 function fmtDate(val){
   if(!val) return "Not specified";
-  var d = new Date(val + "T00:00:00");
-  return d.toLocaleDateString("en-IN",{day:"2-digit",month:"long",year:"numeric"});
+  return new Date(val + "T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"long",year:"numeric"});
 }
 
-var SEND_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>';
-
-// Submit
+// Submit — opens WhatsApp with full application pre-filled
 document.getElementById("admForm").addEventListener("submit", function(e){
   e.preventDefault();
   if(!validate()){
@@ -623,97 +611,50 @@ document.getElementById("admForm").addEventListener("submit", function(e){
     return;
   }
 
-  var btn = document.getElementById("submitBtn");
-  btn.disabled = true;
-  btn.innerHTML = SEND_SVG + " Sending…";
+  var course    = document.querySelector('input[name="course"]:checked').value;
+  var name      = document.getElementById("studentName").value.trim().toUpperCase();
+  var guardian  = document.getElementById("guardian").value.trim();
+  var dob       = fmtDate(document.getElementById("dob").value);
+  var gender    = document.getElementById("gender").value;
+  var education = document.getElementById("education").value.trim();
+  var address   = document.getElementById("address").value.trim();
+  var email     = document.getElementById("email").value.trim();
+  var pin       = document.getElementById("pin").value.trim();
+  var mobile    = document.getElementById("mobile").value.trim();
+  var natl      = document.getElementById("nationality").value.trim();
+  var religion  = document.getElementById("religion").value.trim();
+  var admDate   = fmtDate(document.getElementById("admDate").value);
 
-  var course   = document.querySelector('input[name="course"]:checked').value;
-  var name     = document.getElementById("studentName").value.trim().toUpperCase();
-  var guardian = document.getElementById("guardian").value.trim();
-  var dob      = fmtDate(document.getElementById("dob").value);
-  var gender   = document.getElementById("gender").value;
-  var education= document.getElementById("education").value.trim();
-  var address  = document.getElementById("address").value.trim();
-  var email    = document.getElementById("email").value.trim();
-  var pin      = document.getElementById("pin").value.trim();
-  var mobile   = document.getElementById("mobile").value.trim();
-  var natl     = document.getElementById("nationality").value.trim();
-  var religion = document.getElementById("religion").value.trim();
-  var admDate  = fmtDate(document.getElementById("admDate").value);
-
-  var emailSubject = "Admission Application — " + name + " (" + course + ")";
-
-  var message = [
-    "RAGRANJANI MUSIC ACADEMY — ADMISSION FORM",
+  var msg = [
+    "🎵 *ADMISSION APPLICATION*",
+    "*Ragranjani Music Academy*",
     "Affiliated to Sura Bharati Sangeet Kala Kendra",
-    "7, S.B Roy Choudhury Road, Nimta, Kolkata - 700049",
     "",
-    "═══════════════════════════════════════════",
-    "COURSE APPLIED FOR: " + course,
-    "═══════════════════════════════════════════",
+    "*Course Applied For:* " + course,
     "",
-    "Name of Student     : " + name,
-    "Guardian's Name     : " + guardian,
-    "Date of Birth       : " + dob,
-    "Gender              : " + gender,
-    "Educational Qual.   : " + education,
-    "Nationality         : " + (natl || "Not specified"),
-    "Religion            : " + (religion || "Not specified"),
+    "*STUDENT DETAILS*",
+    "Name: " + name,
+    "Guardian: " + guardian,
+    "Date of Birth: " + dob,
+    "Gender: " + gender,
+    "Education: " + education,
+    "Nationality: " + (natl || "Indian"),
+    "Religion: " + (religion || "—"),
     "",
-    "Mobile Number       : " + mobile,
-    "Email               : " + (email || "Not provided"),
-    "Residential Address : " + address,
-    "PIN Code            : " + pin,
+    "*CONTACT DETAILS*",
+    "Mobile: " + mobile,
+    "Email: " + (email || "Not provided"),
+    "Address: " + address,
+    "PIN: " + pin,
     "",
-    "Subject             : " + course,
-    "Date of Admission   : " + admDate,
+    "Date of Admission: " + admDate,
     "",
-    "═══════════════════════════════════════════",
-    "Submitted via the Ragranjani Music Academy website.",
-    "Please contact the student at the mobile number above to confirm admission."
+    "_Submitted via the academy website. Please confirm admission._"
   ].join("\n");
 
-  var fd = new FormData();
-  fd.append("access_key",   WEB3FORMS_KEY);
-  fd.append("subject",      emailSubject);
-  fd.append("from_name",    name + " via Ragranjani Website");
-  fd.append("cc",           "nirmalya.sen358@gmail.com");
-  fd.append("message",      message);
-  fd.append("Course",       course);
-  fd.append("Student Name", name);
-  fd.append("Guardian",     guardian);
-  fd.append("Date of Birth",dob);
-  fd.append("Gender",       gender);
-  fd.append("Education",    education);
-  fd.append("Mobile",       mobile);
-  fd.append("Address",      address);
-  fd.append("PIN",          pin);
-  if(email)    fd.append("Email",       email);
-  if(natl)     fd.append("Nationality", natl);
-  if(religion) fd.append("Religion",    religion);
-  fd.append("Date of Admission", admDate);
-
-  fetch("https://api.web3forms.com/submit", { method:"POST", body:fd })
-    .then(function(res){ return res.json(); })
-    .then(function(data){
-      btn.disabled = false;
-      btn.innerHTML = SEND_SVG + " Submit Application";
-      if(data.success){
-        showToast("✓ Application submitted! We will contact you soon.", "success", 6000);
-        document.getElementById("admForm").reset();
-        document.querySelectorAll(".course-opt").forEach(function(el){ el.classList.remove("selected"); });
-        document.getElementById("opt-tabla").classList.add("selected");
-        document.getElementById("subject").value = "Tabla";
-        document.getElementById("admDate").value = new Date().toISOString().split("T")[0];
-      } else {
-        showToast("Submission failed. Please call us or try again.", "error");
-      }
-    })
-    .catch(function(){
-      btn.disabled = false;
-      btn.innerHTML = SEND_SVG + " Submit Application";
-      showToast("Network error. Check your connection and try again.", "error");
-    });
+  var url = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg);
+  window.open(url, "_blank");
+  showToast("WhatsApp opened — please press Send to submit.", "success", 5000);
 });
 
 // Remove error highlight on input
