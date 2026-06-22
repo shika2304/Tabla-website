@@ -757,8 +757,10 @@ document.getElementById("admForm").addEventListener("submit", function(e){
 
   // Send email via EmailJS, then open WhatsApp regardless
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-    subject: emailSubject,
-    message: emailBody
+    subject:   emailSubject,
+    message:   emailBody,
+    from_name: "Ragranjani Music Academy — Admission Form",
+    reply_to:  email || "ragranjanimusicacademy@gmail.com"
   })
   .then(function(){
     btn.disabled = false;
