@@ -607,10 +607,12 @@ footer .f-copy{font-size:.85rem;color:rgba(245,233,211,.75)}
 //     → copy the Service ID → paste below as EMAILJS_SERVICE_ID
 //  3. Dashboard → Email Templates → Create New Template
 //     Fill in exactly:
-//       To email  →  ragranjanimusicacademy@gmail.com
-//       CC        →  nirmalya.sen358@gmail.com
-//       Subject   →  {{subject}}
-//       Body      →  {{message}}
+//       To email   →  {{to_email}}
+//       CC         →  nirmalya.sen358@gmail.com
+//       BCC        →  ragranjanimusicacademy@gmail.com
+//       from_email →  ragranjanimusicacademy@gmail.com
+//       Subject    →  {{subject}}
+//       Body       →  {{message}}
 //     Save → copy Template ID → paste below as EMAILJS_TEMPLATE_ID
 //  4. Dashboard → Account → General → Public Key → paste below as EMAILJS_PUBLIC_KEY
 //
@@ -757,6 +759,8 @@ document.getElementById("admForm").addEventListener("submit", function(e){
 
   // Send email via EmailJS, then open WhatsApp regardless
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+    from_email: "ragranjanimusicacademy@gmail.com",
+    to_email:   email || "ragranjanimusicacademy@gmail.com",
     subject:   emailSubject,
     message:   emailBody,
     from_name: "Ragranjani Music Academy — Admission Form",
